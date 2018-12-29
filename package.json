@@ -20,7 +20,8 @@
     "fs-extra": "^7.0.1",
     "ganache-cli": "^6.2.5",
     "mocha": "^5.2.0",
-    "solc": "^0.5.2",
+    "solc": "^0.4.17",
+    "truffle-hdwallet-provider": "^1.0.1",
     "web3": "^1.0.0-beta.26"
   }
 }
