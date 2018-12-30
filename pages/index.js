@@ -2,13 +2,23 @@ import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
 import Layout from '../components/Layout';
+import Product from '../../ethereum/product';
 import { Link } from '../routes';
 
 class ProductIndex extends Component {
-  static async getInitialProps() {
-    const products = await factory.methods.getDeployedProducts().call();
-    console.log(products);
-    return { products };
+  static async getInitialProps(props) {
+    const campaign = Campaign(props.query.address);
+
+    const summary = await campaign.methods.getSummary().call();
+
+    return {
+      address: props.query.address,
+      minimumContribution : summary[0],
+      balance : summary[1],
+      requestsCount : summary[2],
+      approversCount : summary[3],
+      manager : summary[4]
+    };
   }
 
   renderProducts() {
