@@ -42,10 +42,6 @@ var _factory = require('../ethereum/factory');
 
 var _factory2 = _interopRequireDefault(_factory);
 
-var _product = require('../ethereum/product');
-
-var _product2 = _interopRequireDefault(_product);
-
 var _Layout = require('../components/Layout');
 
 var _Layout2 = _interopRequireDefault(_Layout);
@@ -74,21 +70,21 @@ var ProductIndex = function (_Component) {
           header: address,
           description: _react2.default.createElement(_routes.Link, { route: '/products/' + address, __source: {
               fileName: _jsxFileName,
-              lineNumber: 29
+              lineNumber: 18
             }
           }, _react2.default.createElement('a', {
             __source: {
               fileName: _jsxFileName,
-              lineNumber: 30
+              lineNumber: 19
             }
           }, 'View Product')),
-          fluid: true //Make entire screen. From left to right
+          fluid: true //Make a card stretch through entire screen. From left to right
         };
       });
 
       return _react2.default.createElement(_semanticUiReact.Card.Group, { items: items, __source: {
           fileName: _jsxFileName,
-          lineNumber: 37
+          lineNumber: 26
         }
       });
     }
@@ -98,26 +94,26 @@ var ProductIndex = function (_Component) {
       return _react2.default.createElement(_Layout2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 42
+          lineNumber: 31
         }
       }, _react2.default.createElement('div', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 43
+          lineNumber: 32
         }
       }, _react2.default.createElement('h3', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 44
+          lineNumber: 33
         }
       }, 'Open Products'), _react2.default.createElement(_routes.Link, { route: '/products/new', __source: {
           fileName: _jsxFileName,
-          lineNumber: 46
+          lineNumber: 35
         }
       }, _react2.default.createElement('a', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 47
+          lineNumber: 36
         }
       }, _react2.default.createElement(_semanticUiReact.Button, {
         floated: 'right',
@@ -126,35 +122,27 @@ var ProductIndex = function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 48
+          lineNumber: 37
         }
       }))), this.renderProducts()));
     }
   }], [{
     key: 'getInitialProps',
     value: function () {
-      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(props) {
-        var product, summary;
+      var _ref = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee() {
+        var products;
         return _regenerator2.default.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                product = (0, _product2.default)(props.query.address);
-                _context.next = 3;
-                return product.methods.getSummary().call();
+                _context.next = 2;
+                return _factory2.default.methods.getDeployedProducts().call();
 
-              case 3:
-                summary = _context.sent;
-                return _context.abrupt('return', {
-                  address: props.query.address,
-                  minimumContribution: summary[0],
-                  balance: summary[1],
-                  requestsCount: summary[2],
-                  approversCount: summary[3],
-                  manager: summary[4]
-                });
+              case 2:
+                products = _context.sent;
+                return _context.abrupt('return', { products: products });
 
-              case 5:
+              case 4:
               case 'end':
                 return _context.stop();
             }
@@ -162,7 +150,7 @@ var ProductIndex = function (_Component) {
         }, _callee, this);
       }));
 
-      function getInitialProps(_x) {
+      function getInitialProps() {
         return _ref.apply(this, arguments);
       }
 
@@ -174,4 +162,4 @@ var ProductIndex = function (_Component) {
 }(_react.Component);
 
 exports.default = ProductIndex;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsIkNhcmQiLCJCdXR0b24iLCJmYWN0b3J5IiwiUHJvZHVjdCIsIkxheW91dCIsIkxpbmsiLCJQcm9kdWN0SW5kZXgiLCJpdGVtcyIsInByb3BzIiwicHJvZHVjdHMiLCJtYXAiLCJoZWFkZXIiLCJhZGRyZXNzIiwiZGVzY3JpcHRpb24iLCJmbHVpZCIsInJlbmRlclByb2R1Y3RzIiwicHJvZHVjdCIsInF1ZXJ5IiwibWV0aG9kcyIsImdldFN1bW1hcnkiLCJjYWxsIiwic3VtbWFyeSIsIm1pbmltdW1Db250cmlidXRpb24iLCJiYWxhbmNlIiwicmVxdWVzdHNDb3VudCIsImFwcHJvdmVyc0NvdW50IiwibWFuYWdlciJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFTLEFBQU07O0FBQ2YsQUFBTyxBQUFhOzs7O0FBQ3BCLEFBQU8sQUFBYTs7OztBQUNwQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBUyxBQUFZOzs7Ozs7O0ksQUFFZjs7Ozs7Ozs7Ozs7cUNBZ0JhLEFBQ2Y7VUFBTSxhQUFRLEFBQUssTUFBTCxBQUFXLFNBQVgsQUFBb0IsSUFBSSxtQkFBVyxBQUMvQzs7a0JBQU8sQUFDRyxBQUNSO3VDQUNJLEFBQUMsOEJBQUssc0JBQU4sQUFBMEI7d0JBQTFCOzBCQUFBLEFBQ0U7QUFERjtXQUFBLGtCQUNFLGNBQUE7O3dCQUFBOzBCQUFBO0FBQUE7QUFBQSxhQUpELEFBR0QsQUFDRSxBQUdOO2lCQVBLLEFBT0UsS0FQVCxBQUFPLEFBT08sQUFFZjtBQVRRLEFBQ0w7QUFGSixBQUFjLEFBWWQsT0FaYzs7MkNBWVAsQUFBQyxzQkFBRCxBQUFNLFNBQU0sT0FBWixBQUFtQjtvQkFBbkI7c0JBQVAsQUFBTyxBQUNSO0FBRFE7T0FBQTs7Ozs2QkFHQSxBQUNQOzZCQUNFLEFBQUM7O29CQUFEO3NCQUFBLEFBQ0U7QUFERjtBQUFBLE9BQUEsa0JBQ0UsY0FBQTs7b0JBQUE7c0JBQUEsQUFDRTtBQURGO0FBQUEseUJBQ0UsY0FBQTs7b0JBQUE7c0JBQUE7QUFBQTtBQUFBLFNBREYsQUFDRSxBQUVBLGtDQUFBLEFBQUMsOEJBQUssT0FBTixBQUFZO29CQUFaO3NCQUFBLEFBQ0U7QUFERjt5QkFDRSxjQUFBOztvQkFBQTtzQkFBQSxBQUNFO0FBREY7QUFBQSx5QkFDRSxBQUFDO2lCQUFELEFBQ1UsQUFDUjtpQkFGRixBQUVVLEFBQ1I7Y0FIRixBQUdPLEFBQ0w7aUJBSkY7O29CQUFBO3NCQUxOLEFBR0UsQUFDRSxBQUNFLEFBUUg7QUFSRztBQUNFLGlCQVJaLEFBQ0UsQUFDRSxBQWFHLEFBQUssQUFJYjs7Ozs7MkcsQUFuRDRCOzs7OzttQkFDckI7QSwwQkFBVSx1QkFBUSxNQUFBLEFBQU0sTSxBQUFkLEFBQW9COzt1QkFFZCxRQUFBLEFBQVEsUUFBUixBQUFnQixhLEFBQWhCLEFBQTZCOzttQkFBN0M7QTs7MkJBR0ssTUFBQSxBQUFNLE1BRFYsQUFDZ0IsQUFDckI7dUNBQXNCLFFBRmpCLEFBRWlCLEFBQVEsQUFDOUI7MkJBQVUsUUFITCxBQUdLLEFBQVEsQUFDbEI7aUNBQWdCLFFBSlgsQUFJVyxBQUFRLEFBQ3hCO2tDQUFpQixRQUxaLEFBS1ksQUFBUSxBQUN6QjsyQkFBVSxRLEFBTkwsQUFNSyxBQUFRO0FBTmIsQUFDTDs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBLEFBUHFCLEFBdUQzQjs7a0JBQUEsQUFBZSIsImZpbGUiOiJpbmRleC5qcz9lbnRyeSIsInNvdXJjZVJvb3QiOiJDOi9Vc2Vycy9BbGV4L0Jsb2NrY2hhaW5EZXYvRGVjUmV2aWV3In0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsIkNhcmQiLCJCdXR0b24iLCJmYWN0b3J5IiwiTGF5b3V0IiwiTGluayIsIlByb2R1Y3RJbmRleCIsIml0ZW1zIiwicHJvcHMiLCJwcm9kdWN0cyIsIm1hcCIsImhlYWRlciIsImFkZHJlc3MiLCJkZXNjcmlwdGlvbiIsImZsdWlkIiwicmVuZGVyUHJvZHVjdHMiLCJtZXRob2RzIiwiZ2V0RGVwbG95ZWRQcm9kdWN0cyIsImNhbGwiXSwibWFwcGluZ3MiOiI7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxBQUFPLEFBQVM7Ozs7QUFDaEIsQUFBUyxBQUFNOztBQUNmLEFBQU8sQUFBYTs7OztBQUNwQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBUyxBQUFZOzs7Ozs7O0ksQUFFZjs7Ozs7Ozs7Ozs7cUNBTWEsQUFDZjtVQUFNLGFBQVEsQUFBSyxNQUFMLEFBQVcsU0FBWCxBQUFvQixJQUFJLG1CQUFXLEFBQy9DOztrQkFBTyxBQUNHLEFBQ1I7dUNBQ0ksQUFBQyw4QkFBSyxzQkFBTixBQUEwQjt3QkFBMUI7MEJBQUEsQUFDRTtBQURGO1dBQUEsa0JBQ0UsY0FBQTs7d0JBQUE7MEJBQUE7QUFBQTtBQUFBLGFBSkQsQUFHRCxBQUNFLEFBR047aUJBUEssQUFPRSxLQVBULEFBQU8sQUFPTyxBQUVmO0FBVFEsQUFDTDtBQUZKLEFBQWMsQUFZZCxPQVpjOzsyQ0FZUCxBQUFDLHNCQUFELEFBQU0sU0FBTSxPQUFaLEFBQW1CO29CQUFuQjtzQkFBUCxBQUFPLEFBQ1I7QUFEUTtPQUFBOzs7OzZCQUdBLEFBQ1A7NkJBQ0UsQUFBQzs7b0JBQUQ7c0JBQUEsQUFDRTtBQURGO0FBQUEsT0FBQSxrQkFDRSxjQUFBOztvQkFBQTtzQkFBQSxBQUNFO0FBREY7QUFBQSx5QkFDRSxjQUFBOztvQkFBQTtzQkFBQTtBQUFBO0FBQUEsU0FERixBQUNFLEFBRUEsa0NBQUEsQUFBQyw4QkFBSyxPQUFOLEFBQVk7b0JBQVo7c0JBQUEsQUFDRTtBQURGO3lCQUNFLGNBQUE7O29CQUFBO3NCQUFBLEFBQ0U7QUFERjtBQUFBLHlCQUNFLEFBQUM7aUJBQUQsQUFDVSxBQUNSO2lCQUZGLEFBRVUsQUFDUjtjQUhGLEFBR08sQUFDTDtpQkFKRjs7b0JBQUE7c0JBTE4sQUFHRSxBQUNFLEFBQ0UsQUFRSDtBQVJHO0FBQ0UsaUJBUlosQUFDRSxBQUNFLEFBYUcsQUFBSyxBQUliOzs7Ozs7Ozs7Ozs7dUJBeEN3QixrQkFBQSxBQUFRLFFBQVIsQUFBZ0Isc0IsQUFBaEIsQUFBc0M7O21CQUF2RDtBO2lEQUNDLEVBQUUsVSxBQUFGOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBMENYLEEsQUE3QzJCOztrQkE2QzNCLEFBQWUiLCJmaWxlIjoiaW5kZXguanM/ZW50cnkiLCJzb3VyY2VSb290IjoiQzovVXNlcnMvQWxleC9CbG9ja2NoYWluRGV2L0RlY1JldmlldyJ9
