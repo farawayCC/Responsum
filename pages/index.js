@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
+import Product from '../ethereum/product';
 import Layout from '../components/Layout';
-import Product from '../../ethereum/product';
 import { Link } from '../routes';
 
 class ProductIndex extends Component {
   static async getInitialProps(props) {
-    const campaign = Campaign(props.query.address);
+    const product = Product(props.query.address);
 
-    const summary = await campaign.methods.getSummary().call();
+    const summary = await product.methods.getSummary().call();
 
     return {
       address: props.query.address,

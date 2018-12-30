@@ -63,6 +63,18 @@ contract Product {
         review.voters.push(msg.sender);
     }
 
+    function getSummary() public view returns (
+      Review[], string, string, string, address
+      ) {
+        return (
+          reviews,
+          name,
+          photoLink,
+          category, //set by webpage from list of available categories
+          creator
+        );
+    }
+
     function getReviewsCount() public view returns (uint) {
         return reviews.length;
     }
