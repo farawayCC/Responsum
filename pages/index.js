@@ -37,7 +37,7 @@ class ProductIndex extends Component {
       items.push({
         header: headers[index],
         description: (
-                <Link route={`/products/${addresses[index]}`}>
+                <Link route={`/products/${addresdses[index]}`}>
                   <a>View Product</a>
                 </Link>
             ),
