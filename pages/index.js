@@ -10,10 +10,6 @@ class ProductIndex extends Component {
     //Get an array of products addresses
     const productsAddresses = await factory.methods.getDeployedProducts().call();
 
-    // console.log("----------------------");
-    // console.log(productsAddresses);
-    // console.log("----------------------");
-
     //for each product we get a header, using product addresses
     const headers = [];
     for (var i = 0; i < productsAddresses.length; i++) {
@@ -30,8 +26,6 @@ class ProductIndex extends Component {
 
   renderProducts() {
     const { headers, addresses } = this.props;
-
-
     let items = [];
     for (let index in headers) {
       items.push({
@@ -44,16 +38,6 @@ class ProductIndex extends Component {
         fluid: true //Make entire screen. From left to right
       });
     }
-    console.log("Hi man");
-
-    // items = [
-    //   {
-    //     header: 'Project Report - April',
-    //     description: 'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-    //     meta: 'ROI: 30%',
-    //   }];
-    console.log(items);
-
     return <Card.Group items={items} />;
   }
 
