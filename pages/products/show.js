@@ -8,7 +8,7 @@ import { Link } from '../../routes';
 
 class CampaignShow extends Component {
   static async getInitialProps(props) {
-    const campaign = Campaign(props.query.address);
+    const campaign = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
     const summary = await campaign.methods.getSummary().call();
 
