@@ -73,39 +73,36 @@ var ProductIndex = function (_Component) {
           headers = _props.headers,
           addresses = _props.addresses;
 
-      console.log("----------------------");
-      console.log(this.props);
-      console.log("----------------------");
-      var items = [{
-        header: 'Project Report - April',
-        description: 'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-        meta: 'ROI: 30%'
-      }, {
-        header: 'Project Report - May',
-        description: 'Bring to the table win-win survival strategies to ensure proactive domination.',
-        meta: 'ROI: 34%'
-      }, {
-        header: 'Project Report - June',
-        description: 'Capitalise on low hanging fruit to identify a ballpark value added activity to beta test.',
-        meta: 'ROI: 27%'
-      }];
+      var items = [];
+      for (var index in headers) {
+        items.push({
+          header: headers[index],
+          description: _react2.default.createElement(_routes.Link, { route: '/products/' + addresses[index], __source: {
+              fileName: _jsxFileName,
+              lineNumber: 40
+            }
+          }, _react2.default.createElement('a', {
+            __source: {
+              fileName: _jsxFileName,
+              lineNumber: 41
+            }
+          }, 'View Product')),
+          fluid: true //Make entire screen. From left to right
+        });
+      }
+      console.log("Hi man");
 
-      // for (var i = 0; i < headers.length; i++) {
-      //   items.push({
-      //     header: headers[i],
-      //     description: (
-      //         <Link route={`/products/${addresses[i]}`}>
-      //           <a>View Product</a>
-      //         </Link>
-      //     ),
-      //     fluid: true //Make a card stretch through entire screen. From left to right
-      //   });
-      // }
-
+      // items = [
+      //   {
+      //     header: 'Project Report - April',
+      //     description: 'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
+      //     meta: 'ROI: 30%',
+      //   }];
+      console.log(items);
 
       return _react2.default.createElement(_semanticUiReact.Card.Group, { items: items, __source: {
           fileName: _jsxFileName,
-          lineNumber: 72
+          lineNumber: 57
         }
       });
     }
@@ -115,26 +112,26 @@ var ProductIndex = function (_Component) {
       return _react2.default.createElement(_Layout2.default, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 77
+          lineNumber: 62
         }
       }, _react2.default.createElement('div', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 78
+          lineNumber: 63
         }
       }, _react2.default.createElement('h3', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 79
+          lineNumber: 64
         }
       }, 'Open Products'), _react2.default.createElement(_routes.Link, { route: '/products/new', __source: {
           fileName: _jsxFileName,
-          lineNumber: 81
+          lineNumber: 66
         }
       }, _react2.default.createElement('a', {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 82
+          lineNumber: 67
         }
       }, _react2.default.createElement(_semanticUiReact.Button, {
         floated: 'right',
@@ -143,7 +140,7 @@ var ProductIndex = function (_Component) {
         primary: true,
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 83
+          lineNumber: 68
         }
       }))), this.renderProducts()));
     }
@@ -162,44 +159,41 @@ var ProductIndex = function (_Component) {
               case 2:
                 productsAddresses = _context.sent;
 
-                console.log("----------------------");
-                console.log(productsAddresses);
-                console.log("----------------------");
+                // console.log("----------------------");
+                // console.log(productsAddresses);
+                // console.log("----------------------");
 
                 //for each product we get a header, using product addresses
                 headers = [];
                 i = 0;
 
-              case 8:
+              case 5:
                 if (!(i < productsAddresses.length)) {
-                  _context.next = 20;
+                  _context.next = 14;
                   break;
                 }
 
                 product = (0, _product2.default)(productsAddresses[i]);
-                _context.next = 12;
-                return product.methods.name().call;
+                _context.next = 9;
+                return product.methods.name().call();
 
-              case 12:
+              case 9:
                 name = _context.sent;
 
-                console.log("----...--");
-                console.log(name);
-                console.log("----...--");
                 headers.push(name);
 
-              case 17:
+              case 11:
                 i++;
-                _context.next = 8;
+                _context.next = 5;
                 break;
 
-              case 20:
+              case 14:
                 return _context.abrupt('return', {
                   headers: headers,
                   addresses: productsAddresses
                 });
 
-              case 21:
+              case 15:
               case 'end':
                 return _context.stop();
             }
@@ -219,4 +213,4 @@ var ProductIndex = function (_Component) {
 }(_react.Component);
 
 exports.default = ProductIndex;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsIkNhcmQiLCJCdXR0b24iLCJmYWN0b3J5IiwiUHJvZHVjdCIsIkxheW91dCIsIkxpbmsiLCJQcm9kdWN0SW5kZXgiLCJwcm9wcyIsImhlYWRlcnMiLCJhZGRyZXNzZXMiLCJjb25zb2xlIiwibG9nIiwiaXRlbXMiLCJoZWFkZXIiLCJkZXNjcmlwdGlvbiIsIm1ldGEiLCJyZW5kZXJQcm9kdWN0cyIsIm1ldGhvZHMiLCJnZXREZXBsb3llZFByb2R1Y3RzIiwiY2FsbCIsInByb2R1Y3RzQWRkcmVzc2VzIiwiaSIsImxlbmd0aCIsInByb2R1Y3QiLCJuYW1lIiwicHVzaCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFTLEFBQU07O0FBQ2YsQUFBTyxBQUFhOzs7O0FBQ3BCLEFBQU8sQUFBYTs7OztBQUNwQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBUyxBQUFZOzs7Ozs7O0ksQUFFZjs7Ozs7Ozs7Ozs7cUNBMEJhO21CQUNnQixLQURoQixBQUNxQjtVQURyQixBQUNQLGlCQURPLEFBQ1A7VUFETyxBQUNFLG1CQURGLEFBQ0UsQUFFakI7O2NBQUEsQUFBUSxJQUFSLEFBQVksQUFDWjtjQUFBLEFBQVEsSUFBSSxLQUFaLEFBQWlCLEFBQ2pCO2NBQUEsQUFBUSxJQUFSLEFBQVksQUFDWjtVQUFNO2dCQUNKLEFBQ1UsQUFDUjtxQkFGRixBQUVlLEFBQ2I7Y0FKVSxBQUNaLEFBR1E7QUFIUixBQUNFLE9BRlU7Z0JBTVosQUFDVSxBQUNSO3FCQUZGLEFBRWUsQUFDYjtjQVRVLEFBTVosQUFHUTtBQUhSLEFBQ0U7Z0JBSUYsQUFDVSxBQUNSO3FCQUZGLEFBR0ksQUFDRjtjQWZKLEFBQWMsQUFXWixBQUlRLEFBSVY7QUFSRSxBQUNFOztBQVFKO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBR0E7OzsyQ0FBTyxBQUFDLHNCQUFELEFBQU0sU0FBTSxPQUFaLEFBQW1CO29CQUFuQjtzQkFBUCxBQUFPLEFBQ1I7QUFEUTtPQUFBOzs7OzZCQUdBLEFBQ1A7NkJBQ0UsQUFBQzs7b0JBQUQ7c0JBQUEsQUFDRTtBQURGO0FBQUEsT0FBQSxrQkFDRSxjQUFBOztvQkFBQTtzQkFBQSxBQUNFO0FBREY7QUFBQSx5QkFDRSxjQUFBOztvQkFBQTtzQkFBQTtBQUFBO0FBQUEsU0FERixBQUNFLEFBRUEsa0NBQUEsQUFBQyw4QkFBSyxPQUFOLEFBQVk7b0JBQVo7c0JBQUEsQUFDRTtBQURGO3lCQUNFLGNBQUE7O29CQUFBO3NCQUFBLEFBQ0U7QUFERjtBQUFBLHlCQUNFLEFBQUM7aUJBQUQsQUFDVSxBQUNSO2lCQUZGLEFBRVUsQUFDUjtjQUhGLEFBR08sQUFDTDtpQkFKRjs7b0JBQUE7c0JBTE4sQUFHRSxBQUNFLEFBQ0UsQUFRSDtBQVJHO0FBQ0UsaUJBUlosQUFDRSxBQUNFLEFBYUcsQUFBSyxBQUliOzs7Ozs7Ozs7Ozs7dUJBcEZpQyxrQkFBQSxBQUFRLFFBQVIsQUFBZ0Isc0IsQUFBaEIsQUFBc0M7O21CQUFoRTtBLDZDQUVOOzt3QkFBQSxBQUFRLElBQVIsQUFBWSxBQUNaO3dCQUFBLEFBQVEsSUFBUixBQUFZLEFBQ1o7d0JBQUEsQUFBUSxJQUFSLEFBQVksQUFFWjs7QUFDTTtBLDBCLEFBQVUsQUFDUDtBLG9CLEFBQUk7OztzQkFBRyxJQUFJLGtCLEFBQWtCOzs7QUFDOUI7O0EsMEJBQVUsdUJBQVEsa0IsQUFBUixBQUFRLEFBQWtCOzt1QkFDdkIsUUFBQSxBQUFRLFFBQVIsQUFBZ0IsTyxBQUFPOzttQkFBcEM7QSxnQ0FDTjs7d0JBQUEsQUFBUSxJQUFSLEFBQVksQUFDWjt3QkFBQSxBQUFRLElBQVIsQUFBWSxBQUNaO3dCQUFBLEFBQVEsSUFBUixBQUFZLEFBQ1o7d0JBQUEsQUFBUSxLQUFSLEFBQWE7O21CQU4rQjtBOzs7Ozs7MkJBU3ZDLEFBQ0ksQUFDVDs2QixBQUZLLEFBRU07QUFGTixBQUNMOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBcUVOLEEsQUExRjJCOztrQkEwRjNCLEFBQWUiLCJmaWxlIjoiaW5kZXguanM/ZW50cnkiLCJzb3VyY2VSb290IjoiQzovVXNlcnMvQWxleC9CbG9ja2NoYWluRGV2L0RlY1JldmlldyJ9
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBhZ2VzXFxpbmRleC5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkNvbXBvbmVudCIsIkNhcmQiLCJCdXR0b24iLCJmYWN0b3J5IiwiUHJvZHVjdCIsIkxheW91dCIsIkxpbmsiLCJQcm9kdWN0SW5kZXgiLCJwcm9wcyIsImhlYWRlcnMiLCJhZGRyZXNzZXMiLCJpdGVtcyIsImluZGV4IiwicHVzaCIsImhlYWRlciIsImRlc2NyaXB0aW9uIiwiZmx1aWQiLCJjb25zb2xlIiwibG9nIiwicmVuZGVyUHJvZHVjdHMiLCJtZXRob2RzIiwiZ2V0RGVwbG95ZWRQcm9kdWN0cyIsImNhbGwiLCJwcm9kdWN0c0FkZHJlc3NlcyIsImkiLCJsZW5ndGgiLCJwcm9kdWN0IiwibmFtZSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU8sQUFBUzs7OztBQUNoQixBQUFTLEFBQU07O0FBQ2YsQUFBTyxBQUFhOzs7O0FBQ3BCLEFBQU8sQUFBYTs7OztBQUNwQixBQUFPLEFBQVk7Ozs7QUFDbkIsQUFBUyxBQUFZOzs7Ozs7O0ksQUFFZjs7Ozs7Ozs7Ozs7cUNBdUJhO21CQUNnQixLQURoQixBQUNxQjtVQURyQixBQUNQLGlCQURPLEFBQ1A7VUFETyxBQUNFLG1CQURGLEFBQ0UsQUFHakI7O1VBQUksUUFBSixBQUFZLEFBQ1o7V0FBSyxJQUFMLEFBQVMsU0FBVCxBQUFrQixTQUFTLEFBQ3pCO2NBQUEsQUFBTTtrQkFDSSxRQURDLEFBQ0QsQUFBUSxBQUNoQjt1Q0FDUSxBQUFDLDhCQUFLLHNCQUFvQixVQUExQixBQUEwQixBQUFVO3dCQUFwQzswQkFBQSxBQUNFO0FBREY7V0FBQSxrQkFDRSxjQUFBOzt3QkFBQTswQkFBQTtBQUFBO0FBQUEsYUFKRCxBQUdELEFBQ0UsQUFHVjtpQkFQUyxBQU9GLEtBUFQsQUFBVyxBQU9HLEFBRWY7QUFUWSxBQUNUO0FBU0o7Y0FBQSxBQUFRLElBQVIsQUFBWSxBQUVaOztBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtjQUFBLEFBQVEsSUFBUixBQUFZLEFBRVo7OzJDQUFPLEFBQUMsc0JBQUQsQUFBTSxTQUFNLE9BQVosQUFBbUI7b0JBQW5CO3NCQUFQLEFBQU8sQUFDUjtBQURRO09BQUE7Ozs7NkJBR0EsQUFDUDs2QkFDRSxBQUFDOztvQkFBRDtzQkFBQSxBQUNFO0FBREY7QUFBQSxPQUFBLGtCQUNFLGNBQUE7O29CQUFBO3NCQUFBLEFBQ0U7QUFERjtBQUFBLHlCQUNFLGNBQUE7O29CQUFBO3NCQUFBO0FBQUE7QUFBQSxTQURGLEFBQ0UsQUFFQSxrQ0FBQSxBQUFDLDhCQUFLLE9BQU4sQUFBWTtvQkFBWjtzQkFBQSxBQUNFO0FBREY7eUJBQ0UsY0FBQTs7b0JBQUE7c0JBQUEsQUFDRTtBQURGO0FBQUEseUJBQ0UsQUFBQztpQkFBRCxBQUNVLEFBQ1I7aUJBRkYsQUFFVSxBQUNSO2NBSEYsQUFHTyxBQUNMO2lCQUpGOztvQkFBQTtzQkFMTixBQUdFLEFBQ0UsQUFDRSxBQVFIO0FBUkc7QUFDRSxpQkFSWixBQUNFLEFBQ0UsQUFhRyxBQUFLLEFBSWI7Ozs7Ozs7Ozs7Ozt1QkFyRWlDLGtCQUFBLEFBQVEsUUFBUixBQUFnQixzQixBQUFoQixBQUFzQzs7bUJBQWhFO0EsNkNBRU47O0FBQ0E7QUFDQTtBQUVBOztBQUNNO0EsMEJBQ0csQSxBQURPO0Esb0IsQUFDSDs7O3NCQUFHLElBQUksa0IsQUFBa0I7OztBQUM5Qjs7QSwwQkFBVSx1QkFBUSxrQixBQUFSLEFBQVEsQUFBa0I7O3VCQUN2QixRQUFBLEFBQVEsUUFBUixBQUFnQixPLEFBQWhCLEFBQXVCOzttQkFBcEM7QSxnQ0FDTjs7d0JBQUEsQUFBUSxLQUFSLEFBQWE7O21CQUgrQjtBOzs7Ozs7MkJBTXZDLEFBQ0ksQUFDVDs2QixBQUZLLEFBRU07QUFGTixBQUNMOzs7Ozs7Ozs7Ozs7Ozs7Ozs7O0EsQUFsQnFCLEFBMkUzQjs7a0JBQUEsQUFBZSIsImZpbGUiOiJpbmRleC5qcz9lbnRyeSIsInNvdXJjZVJvb3QiOiJDOi9Vc2Vycy9BbGV4L0Jsb2NrY2hhaW5EZXYvRGVjUmV2aWV3In0=

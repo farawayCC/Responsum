@@ -10,18 +10,15 @@ class ProductIndex extends Component {
     //Get an array of products addresses
     const productsAddresses = await factory.methods.getDeployedProducts().call();
 
-    console.log("----------------------");
-    console.log(productsAddresses);
-    console.log("----------------------");
+    // console.log("----------------------");
+    // console.log(productsAddresses);
+    // console.log("----------------------");
 
     //for each product we get a header, using product addresses
     const headers = [];
     for (var i = 0; i < productsAddresses.length; i++) {
       const product = Product(productsAddresses[i]);
-      const name = await product.methods.name().call;
-      console.log("----...--");
-      console.log(name);
-      console.log("----...--");
+      const name = await product.methods.name().call();
       headers.push(name);
     }
 
@@ -34,40 +31,28 @@ class ProductIndex extends Component {
   renderProducts() {
     const { headers, addresses } = this.props;
 
-    console.log("----------------------");
-    console.log(this.props);
-    console.log("----------------------");
-    const items = [
-      {
-        header: 'Project Report - April',
-        description: 'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
-        meta: 'ROI: 30%',
-      },
-      {
-        header: 'Project Report - May',
-        description: 'Bring to the table win-win survival strategies to ensure proactive domination.',
-        meta: 'ROI: 34%',
-      },
-      {
-        header: 'Project Report - June',
-        description:
-          'Capitalise on low hanging fruit to identify a ballpark value added activity to beta test.',
-        meta: 'ROI: 27%',
-      },
-    ]
 
-    // for (var i = 0; i < headers.length; i++) {
-    //   items.push({
-    //     header: headers[i],
-    //     description: (
-    //         <Link route={`/products/${addresses[i]}`}>
-    //           <a>View Product</a>
-    //         </Link>
-    //     ),
-    //     fluid: true //Make a card stretch through entire screen. From left to right
-    //   });
-    // }
+    let items = [];
+    for (let index in headers) {
+      items.push({
+        header: headers[index],
+        description: (
+                <Link route={`/products/${addresses[index]}`}>
+                  <a>View Product</a>
+                </Link>
+            ),
+        fluid: true //Make entire screen. From left to right
+      });
+    }
+    console.log("Hi man");
 
+    // items = [
+    //   {
+    //     header: 'Project Report - April',
+    //     description: 'Leverage agile frameworks to provide a robust synopsis for high level overviews.',
+    //     meta: 'ROI: 30%',
+    //   }];
+    console.log(items);
 
     return <Card.Group items={items} />;
   }
