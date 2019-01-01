@@ -27,15 +27,12 @@ class ProductIndex extends Component {
             return product.methods.reviews(index).call();
           })
       );
-      // console.log(reviews);
       let sum = 0;
 
       for (var j = 0; j < reviewsCount; j++) {
         sum=parseInt(sum)+parseInt(reviews[j].rate);
-        console.log(reviews[j].rate);
       }
       avgRatings.push(sum/reviewsCount);
-      console.log("avgRatings="+avgRatings);
     }
 
     return {
