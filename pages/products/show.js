@@ -3,60 +3,81 @@ import { Card, Grid, Button } from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import Product from '../../ethereum/product';
 import web3 from '../../ethereum/web3'
-import ContributeForm from '../../components/ContributeForm';
+import ReviewForm from '../../components/ReviewForm';
 import { Link } from '../../routes';
 
-class CampaignShow extends Component {
+class ProductShow extends Component {
   static async getInitialProps(props) {
-    const campaign = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
+    const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
-    const summary = await campaign.methods.getSummary().call();
+    // const summary = await product.methods.getSummary().call();
+    const name = await product.methods.name().call();
+    const photoLink = await product.methods.photoLink().call();
+    const category = await product.methods.category().call();
+    const creator = await product.methods.creator().call();
 
+    const reviewsCount = await product.methods.getReviewsCount().call();
+    const reviews = await Promise.all(
+      Array(parseInt(reviewsCount))
+        .fill()
+        .map((element, index) => {
+          return product.methods.reviews(index).call();
+        })
+    );
+    for (var j = 0; j < reviewsCount; j++) {
+
+    }
+
+
+    // return{};
     return {
-      address: props.query.address,
-      minimumContribution : summary[0],
-      balance : summary[1],
-      requestsCount : summary[2],
-      approversCount : summary[3],
-      manager : summary[4]
+      // address: props.query.address,
+      // // reviews: summary[0],
+      // name: summary[1],
+      // photoLink: summary[2],
+      // category: summary[3],
+      // creator: summary[4]
+      name: name,
+      photoLink: photoLink,
+      category: category, //set by webpage from list of available categories
+      creator: creator
     };
+  }
+
+  renderReviews() {
+    return ;
   }
 
   renderCards() {
     const {
-      balance,
-      manager,
-      minimumContribution,
-      requestsCount,
-      approversCount
+      // reviews,
+      name,
+      photoLink,
+      category, //set by webpage from list of available categories
+      creator
     } = this.props;
 
     const items = [
       {
-        header: manager,
-        meta: 'Address of Manager',
-        description: 'The manager created this campaign and can create requests to withdraw money',
-        style: { overflowWrap: 'break-word' }
+        header: name,
+        meta: 'Name of a product',
+        description: ''
       },
       {
-        header: minimumContribution,
-        meta: 'Minimum Contribution (wei)',
-        description: 'You must contribute at least this much wei to become an approver'
+        header: category,
+        meta: 'Category',
+        description: 'Chosen from a drop-down list'
       },
       {
-        header: requestsCount,
-        meta: 'Number of Requests',
-        description: 'A request tries to withdraw money from the contract. Requests must be approved by approvers'
+        header: creator,
+        meta: 'Address of Creator',
+        style: { overflowWrap: 'break-word' },
+        description: 'The creator created this product and can delete it before anybody will review it'
       },
       {
-        header: approversCount,
-        meta: 'Number of Approvers',
-        description: 'Number of people who have already donated to this campaign'
-      },
-      {
-        header: web3.utils.fromWei(balance, 'ether'),
-        meta: 'Campaign balance (ether)',
-        description: 'how much money this campaig has left to spend'
+        header: photoLink,
+        meta: 'Link to a photo',
+        description: 'Will be readed by web page and transformed to actual photo'
       },
     ];
 
@@ -66,7 +87,8 @@ class CampaignShow extends Component {
   render() {
     return (
       <Layout>
-        <h3>Campaign Show</h3>
+        <h3>Show a Product</h3>
+
         <Grid>
           <Grid.Row>
             <Grid.Column width={10}>
@@ -74,24 +96,23 @@ class CampaignShow extends Component {
             </Grid.Column>
 
             <Grid.Column width={6}>
-              <ContributeForm address={this.props.address} />
+              <ReviewForm address={this.props.address} />
             </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Link route={`/campaigns/${this.props.address}/requests`}>
-                  <a>
-                    <Button primary>View Requests</Button >
-                  </a>
-                </Link>
-              </Grid.Column>
-            </Grid.Row>
+          </Grid.Row>
 
-
+          <Grid.Row>
+            <Grid.Column>
+              <Link route={`/products/${this.props.address}/reviews`}>
+                <a>
+                  <Button primary>View Reviews</Button >
+                </a>
+              </Link>
+            </Grid.Column>
+          </Grid.Row>
         </Grid>
       </Layout>
     );
   }
 }
 
-export default CampaignShow;
+export default ProductShow;
