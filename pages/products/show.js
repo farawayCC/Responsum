@@ -96,11 +96,11 @@ class ProductShow extends Component {
       ijk = ijk+1;
     });
 
-    return (<div>{reviewCards.reverse()}</div>);
+    return reviewCards.reverse();
   }
 
   render() {
-    const {name} = this.props;
+    const { name, address } = this.props;
     return (
       <Layout>
 
@@ -108,12 +108,15 @@ class ProductShow extends Component {
 
         <Grid>
             <Grid.Column width={16}>
-
-              {this.renderProduct()}
+              <div>
+                {this.renderProduct()}
+              </div>
             </Grid.Column>
 
             <Grid.Column width={16}>
-              {this.renderReviews()}
+            <Link route={`/products/${address}/reviews/`}>
+              <a>{this.renderReviews()}</a>
+            </Link>
             </Grid.Column>
 
         </Grid>

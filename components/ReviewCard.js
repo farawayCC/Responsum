@@ -12,7 +12,8 @@ export default props => {
 
             <Grid.Column width={12}>
               <Header as='h1'>
-                <a>{props.review.header}</a>
+                  <a>{props.review.header}</a>
+                  {console.log(props.address)}
               </Header>
               <Rating icon='star' defaultRating={props.review.rate} maxRating={5} disabled />
               <Header as='h3'>{props.review.text}</Header>
