@@ -1,29 +1,43 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
 import factory from '../ethereum/factory';
+import Product from '../ethereum/product';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
 
 class ProductIndex extends Component {
   static async getInitialProps() {
-    const products = await factory.methods.getDeployedProducts().call();
-    console.log(products);
-    return { products };
+    //Get an array of products addresses
+    const productsAddresses = await factory.methods.getDeployedProducts().call();
+
+    //for each product we get a header, using product addresses
+    const headers = [];
+    for (var i = 0; i < productsAddresses.length; i++) {
+      const product = Product(productsAddresses[i]);
+      const name = await product.methods.name().call();
+      headers.push(name);
+    }
+
+    return {
+      headers: headers,
+      addresses: productsAddresses
+    };
   }
 
   renderProducts() {
-    const items = this.props.products.map(address => {
-      return {
-        header: address,
+    const { headers, addresses } = this.props;
+    let items = [];
+    for (let index in headers) {
+      items.push({
+        header: headers[index],
         description: (
-            <Link route={`/products/${address}`}>
-              <a>View Product</a>
-            </Link>
-        ),
+                <Link route={`/products/${addresses[index]}`}>
+                  <a>View Product</a>
+                </Link>
+            ),
         fluid: true //Make entire screen. From left to right
-      };
-    });
-
+      });
+    }
     return <Card.Group items={items} />;
   }
 

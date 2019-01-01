@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
-import Campaign from '../ethereum/campaign';
+import Product from '../ethereum/Product';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
-class ContributeForm extends Component {
+class ReviewForm extends Component {
   state = {
     value: '',
     errorMessage: '',
@@ -14,7 +14,7 @@ class ContributeForm extends Component {
   onSubmit = async event => {
       event.preventDefault();
 
-      const campaign = Campaign(this.props.address);
+      const product = Product(this.props.address);
 
       this.setState({ loading: true, errorMessage: '' });
 
