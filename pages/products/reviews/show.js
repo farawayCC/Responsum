@@ -5,22 +5,24 @@ import Layout from '../../../components/Layout';
 import Campaign from '../../../ethereum/campaign';
 import RequestRow from '../../../components/RequestRow';
 
-class RequestIndex extends Component {
+class ReviewShow extends Component {
   static async getInitialProps(props) {
     const { address } = props.query;
-    const campaign = Campaign(address);
-    const requestCount = await campaign.methods.getRequestsCount().call();
-    const approversCount = await campaign.methods.approversCount().call();
-
-    const requests = await Promise.all(
-      Array(parseInt(requestCount))
+    const product = Campaign(address);
+    const reviewsCount = await product.methods.getReviewsCount().call();
+    const reviews = await Promise.all(
+      Array(parseInt(reviewsCount))
         .fill()
         .map((element, index) => {
-          return campaign.methods.requests(index).call();
+          return product.methods.reviews(index).call();
         })
     );
 
-    return { address, requests, requestCount, approversCount };
+    return {
+      review: reviews[props.index],
+      addresses: productsAddresses,
+      avgRatings: avgRatings
+    };
   }
 
   renderRows() {
@@ -70,4 +72,4 @@ class RequestIndex extends Component {
   }
 }
 
-export default RequestIndex;
+export default ReviewIndex;

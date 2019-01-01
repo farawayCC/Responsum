@@ -14,6 +14,7 @@ class ProductShow extends Component {
     const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
     // const summary = await product.methods.getSummary().call();
+    const address = props.query.address;
     const name = await product.methods.name().call();
     const photoLink = await product.methods.photoLink().call();
     const category = await product.methods.category().call();
@@ -41,7 +42,8 @@ class ProductShow extends Component {
       name: name,
       photoLink: photoLink,
       category: category, //set by webpage from list of available categories
-      creator: creator
+      creator: creator,
+      address: address
     };
   }
 
@@ -80,15 +82,18 @@ class ProductShow extends Component {
   renderReviews() {
     const {
       reviewsCount,
-      reviews
+      reviews,
+      address
     } = this.props;
 
     const reviewCards = [];
+    let ijk = 0;
     reviews.map(function(review) {
       reviewCards.push(
         <Divider />,
-        <ReviewCard review={review} />
+        <ReviewCard review={review} address={address} index={ijk}/>
       );
+      ijk = ijk+1;
     });
 
     return (<div>{reviewCards.reverse()}</div>);
