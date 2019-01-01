@@ -10,22 +10,43 @@ class ProductIndex extends Component {
     //Get an array of products addresses
     const productsAddresses = await factory.methods.getDeployedProducts().call();
 
-    //for each product we get a header, using product addresses
+    //For each product
     const headers = [];
+    let avgRatings = [];
     for (var i = 0; i < productsAddresses.length; i++) {
+      //get name
       const product = Product(productsAddresses[i]);
       const name = await product.methods.name().call();
       headers.push(name);
+      //get Avg rating
+      const reviewsCount = await product.methods.getReviewsCount().call();
+      const reviews = await Promise.all(
+        Array(parseInt(reviewsCount))
+          .fill()
+          .map((element, index) => {
+            return product.methods.reviews(index).call();
+          })
+      );
+      // console.log(reviews);
+      let sum = 0;
+
+      for (var j = 0; j < reviewsCount; j++) {
+        sum=parseInt(sum)+parseInt(reviews[j].rate);
+        console.log(reviews[j].rate);
+      }
+      avgRatings.push(sum/reviewsCount);
+      console.log("avgRatings="+avgRatings);
     }
 
     return {
       headers: headers,
-      addresses: productsAddresses
+      addresses: productsAddresses,
+      avgRatings: avgRatings
     };
   }
 
   renderProducts() {
-    const { headers, addresses } = this.props;
+    const { headers, addresses, avgRatings } = this.props;
     let items = [];
     for (let index in headers) {
       items.push({
@@ -35,6 +56,7 @@ class ProductIndex extends Component {
                   <a>View Product</a>
                 </Link>
             ),
+        meta: "Avg rating: "+avgRatings[index],
         fluid: true //Make entire screen. From left to right
       });
     }
