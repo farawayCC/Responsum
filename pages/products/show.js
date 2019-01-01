@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Card, Grid, Button } from 'semantic-ui-react';
+import { Card, Icon, Image, Grid, Button, Divider, Container, Header, Rating }
+  from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import Product from '../../ethereum/product';
 import web3 from '../../ethereum/web3'
 import ReviewForm from '../../components/ReviewForm';
+import ReviewCard from '../../components/ReviewCard';
+
 import { Link } from '../../routes';
 
 class ProductShow extends Component {
@@ -24,19 +27,17 @@ class ProductShow extends Component {
           return product.methods.reviews(index).call();
         })
     );
+
+    let sum = 0;
     for (var j = 0; j < reviewsCount; j++) {
-
+      sum=parseInt(sum)+parseInt(reviews[j].rate);
     }
+    const avgRating=sum/reviewsCount;
 
-
-    // return{};
     return {
-      // address: props.query.address,
-      // // reviews: summary[0],
-      // name: summary[1],
-      // photoLink: summary[2],
-      // category: summary[3],
-      // creator: summary[4]
+      reviewsCount: reviewsCount,
+      reviews: reviews,
+      avgRating: avgRating,
       name: name,
       photoLink: photoLink,
       category: category, //set by webpage from list of available categories
@@ -44,71 +45,70 @@ class ProductShow extends Component {
     };
   }
 
-  renderReviews() {
-    return ;
-  }
 
-  renderCards() {
+  renderProduct() {
     const {
-      // reviews,
+      reviewsCount,
       name,
       photoLink,
       category, //set by webpage from list of available categories
-      creator
+      creator,
+      avgRating
     } = this.props;
 
-    const items = [
-      {
-        header: name,
-        meta: 'Name of a product',
-        description: ''
-      },
-      {
-        header: category,
-        meta: 'Category',
-        description: 'Chosen from a drop-down list'
-      },
-      {
-        header: creator,
-        meta: 'Address of Creator',
-        style: { overflowWrap: 'break-word' },
-        description: 'The creator created this product and can delete it before anybody will review it'
-      },
-      {
-        header: photoLink,
-        meta: 'Link to a photo',
-        description: 'Will be readed by web page and transformed to actual photo'
-      },
-    ];
+    return (
+      <Grid celled>
+        <Grid.Row>
+          <Grid.Column width={5}>
+            <Image src={photoLink} />
+          </Grid.Column>
 
-    return <Card.Group items={items} />;
+          <Grid.Column width={11}>
+            <Container text>
+              <Header as='h1'>{name}</Header>
+              <Rating icon='star' defaultRating={avgRating} maxRating={5} disabled />
+              <Header as='h3'>Category: {category}</Header>
+              <Header as='h3'>Reviews Count: {reviewsCount}</Header>
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  }
+
+  renderReviews() {
+    const {
+      reviewsCount,
+      reviews
+    } = this.props;
+
+    const reviewCards = [];
+    reviews.map(function(review) {
+      reviewCards.push(
+        <ReviewCard review={review} />
+      );
+    });
+
+    return (<div>{reviewCards}</div>);
   }
 
   render() {
+    const {name} = this.props;
     return (
       <Layout>
-        <h3>Show a Product</h3>
+
+        <h3>{name} - review</h3>
 
         <Grid>
-          <Grid.Row>
-            <Grid.Column width={10}>
-              {this.renderCards()}
+            <Grid.Column width={16}>
+
+              {this.renderProduct()}
             </Grid.Column>
 
-            <Grid.Column width={6}>
-              <ReviewForm address={this.props.address} />
+            <Grid.Column width={16}>
+              {this.renderReviews()}
             </Grid.Column>
-          </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column>
-              <Link route={`/products/${this.props.address}/reviews`}>
-                <a>
-                  <Button primary>View Reviews</Button >
-                </a>
-              </Link>
-            </Grid.Column>
-          </Grid.Row>
         </Grid>
       </Layout>
     );
