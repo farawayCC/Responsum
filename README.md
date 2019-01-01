@@ -1,1 +1,3 @@
 # DecReview
+
+We are creating a decentralized feedback platform on the Tron network. On our platform, the authors receive a reward for good reviews, and the rating depends on the activity not only on the site but also on the Trone network. The platform will allow companies to get good feedback by allocating a small budget. This industry is enormous and gaining feedback is challenging and expensive nowadays. We offer a win-win system when the manufacturer receives high-quality information about their products+great advertisement, and the authors of reviews are getting honestly paid for their efforts. The team believes that this project will perfectly fit into the ecosystem of the Tron and help with the spreading of such great technology.
