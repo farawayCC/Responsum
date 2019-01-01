@@ -86,12 +86,12 @@ class ProductShow extends Component {
     const reviewCards = [];
     reviews.map(function(review) {
       reviewCards.push(
-        <ReviewCard review={review} />,
-        <Divider />
+        <Divider />,
+        <ReviewCard review={review} />
       );
     });
 
-    return (<div>{reviewCards}</div>);
+    return (<div>{reviewCards.reverse()}</div>);
   }
 
   render() {
