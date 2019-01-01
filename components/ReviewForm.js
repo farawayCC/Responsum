@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
-import Product from '../ethereum/Product';
+import Product from '../ethereum/product';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
@@ -48,11 +48,11 @@ class ReviewForm extends Component {
 
           <Message error header="Oops!" content={this.state.errorMessage} />
           <Button primary loading={this.state.loading}>
-            Contribute!
+            Create!
           </Button>
         </Form>
       );
   }
 }
 
-export default ContributeForm;
+export default ReviewForm;

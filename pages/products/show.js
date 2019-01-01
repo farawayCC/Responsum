@@ -1,92 +1,115 @@
 import React, { Component } from 'react';
-import { Card, Grid, Button } from 'semantic-ui-react';
+import { Card, Icon, Image, Grid, Button, Divider, Container, Header, Rating }
+  from 'semantic-ui-react';
 import Layout from '../../components/Layout';
 import Product from '../../ethereum/product';
 import web3 from '../../ethereum/web3'
-import ContributeForm from '../../components/ContributeForm';
+import ReviewForm from '../../components/ReviewForm';
+import ReviewCard from '../../components/ReviewCard';
+
 import { Link } from '../../routes';
 
-class CampaignShow extends Component {
+class ProductShow extends Component {
   static async getInitialProps(props) {
-    const campaign = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
+    const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
-    const summary = await campaign.methods.getSummary().call();
+    // const summary = await product.methods.getSummary().call();
+    const name = await product.methods.name().call();
+    const photoLink = await product.methods.photoLink().call();
+    const category = await product.methods.category().call();
+    const creator = await product.methods.creator().call();
+
+    const reviewsCount = await product.methods.getReviewsCount().call();
+    const reviews = await Promise.all(
+      Array(parseInt(reviewsCount))
+        .fill()
+        .map((element, index) => {
+          return product.methods.reviews(index).call();
+        })
+    );
+
+    let sum = 0;
+    for (var j = 0; j < reviewsCount; j++) {
+      sum=parseInt(sum)+parseInt(reviews[j].rate);
+    }
+    const avgRating=sum/reviewsCount;
 
     return {
-      address: props.query.address,
-      minimumContribution : summary[0],
-      balance : summary[1],
-      requestsCount : summary[2],
-      approversCount : summary[3],
-      manager : summary[4]
+      reviewsCount: reviewsCount,
+      reviews: reviews,
+      avgRating: avgRating,
+      name: name,
+      photoLink: photoLink,
+      category: category, //set by webpage from list of available categories
+      creator: creator
     };
   }
 
-  renderCards() {
+
+  renderProduct() {
     const {
-      balance,
-      manager,
-      minimumContribution,
-      requestsCount,
-      approversCount
+      reviewsCount,
+      name,
+      photoLink,
+      category, //set by webpage from list of available categories
+      creator,
+      avgRating
     } = this.props;
 
-    const items = [
-      {
-        header: manager,
-        meta: 'Address of Manager',
-        description: 'The manager created this campaign and can create requests to withdraw money',
-        style: { overflowWrap: 'break-word' }
-      },
-      {
-        header: minimumContribution,
-        meta: 'Minimum Contribution (wei)',
-        description: 'You must contribute at least this much wei to become an approver'
-      },
-      {
-        header: requestsCount,
-        meta: 'Number of Requests',
-        description: 'A request tries to withdraw money from the contract. Requests must be approved by approvers'
-      },
-      {
-        header: approversCount,
-        meta: 'Number of Approvers',
-        description: 'Number of people who have already donated to this campaign'
-      },
-      {
-        header: web3.utils.fromWei(balance, 'ether'),
-        meta: 'Campaign balance (ether)',
-        description: 'how much money this campaig has left to spend'
-      },
-    ];
+    return (
+      <Grid celled>
+        <Grid.Row>
+          <Grid.Column width={5}>
+            <Image src={photoLink} />
+          </Grid.Column>
 
-    return <Card.Group items={items} />;
+          <Grid.Column width={11}>
+            <Container text>
+              <Header as='h1'>{name}</Header>
+              <Rating icon='star' defaultRating={avgRating} maxRating={5} disabled />
+              <Header as='h3'>Category: {category}</Header>
+              <Header as='h3'>Reviews Count: {reviewsCount}</Header>
+            </Container>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    );
+  }
+
+
+  renderReviews() {
+    const {
+      reviewsCount,
+      reviews
+    } = this.props;
+
+    const reviewCards = [];
+    reviews.map(function(review) {
+      reviewCards.push(
+        <Divider />,
+        <ReviewCard review={review} />
+      );
+    });
+
+    return (<div>{reviewCards.reverse()}</div>);
   }
 
   render() {
+    const {name} = this.props;
     return (
       <Layout>
-        <h3>Campaign Show</h3>
+
+        <h3>{name} - review</h3>
+
         <Grid>
-          <Grid.Row>
-            <Grid.Column width={10}>
-              {this.renderCards()}
+            <Grid.Column width={16}>
+
+              {this.renderProduct()}
             </Grid.Column>
 
-            <Grid.Column width={6}>
-              <ContributeForm address={this.props.address} />
+            <Grid.Column width={16}>
+              {this.renderReviews()}
             </Grid.Column>
-            </Grid.Row>
-            <Grid.Row>
-              <Grid.Column>
-                <Link route={`/campaigns/${this.props.address}/requests`}>
-                  <a>
-                    <Button primary>View Requests</Button >
-                  </a>
-                </Link>
-              </Grid.Column>
-            </Grid.Row>
-
 
         </Grid>
       </Layout>
@@ -94,4 +117,4 @@ class CampaignShow extends Component {
   }
 }
 
-export default CampaignShow;
+export default ProductShow;
