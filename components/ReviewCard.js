@@ -3,22 +3,19 @@ import { Grid, Image, Container, Header, Rating } from 'semantic-ui-react'
 
 export default props => {
   const finalElement = (
-        <Grid celled='internally'>
-          <Grid.Row>
+        <Grid>
             <Grid.Column width={4}>
-              <Image src={props.review.photoLink} />
+                <Image src={props.review.photoLink} />
             </Grid.Column>
 
             <Grid.Column width={12}>
-              <Header as='h3'>Author address: {props.review.author}</Header>
               <Header as='h1'>{props.review.header}</Header>
               <Rating icon='star' defaultRating={props.review.rate} maxRating={5} disabled />
               <Header as='h3'>{props.review.text}</Header>
+              <Header as='h3' >Author address: {props.review.author}</Header>
             </Grid.Column>
-          </Grid.Row>
         </Grid>
   );
-  // console.log(finalElement);
   return finalElement;
 };
 

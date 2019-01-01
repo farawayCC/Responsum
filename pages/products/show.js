@@ -76,6 +76,7 @@ class ProductShow extends Component {
     );
   }
 
+
   renderReviews() {
     const {
       reviewsCount,
@@ -85,7 +86,8 @@ class ProductShow extends Component {
     const reviewCards = [];
     reviews.map(function(review) {
       reviewCards.push(
-        <ReviewCard review={review} />
+        <ReviewCard review={review} />,
+        <Divider />
       );
     });
 
