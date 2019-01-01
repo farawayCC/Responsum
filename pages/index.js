@@ -27,8 +27,8 @@ class ProductIndex extends Component {
             return product.methods.reviews(index).call();
           })
       );
+      
       let sum = 0;
-
       for (var j = 0; j < reviewsCount; j++) {
         sum=parseInt(sum)+parseInt(reviews[j].rate);
       }
