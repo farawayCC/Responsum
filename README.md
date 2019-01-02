@@ -6,6 +6,12 @@ Decentralized feedback platform on the Tron network. On our platform, the author
 
 Copy repository on your computer
 
+Install npm
+
+```
+npm install npm@latest -g
+```
+
 Install packages
 
 ```
