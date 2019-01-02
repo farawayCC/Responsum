@@ -31,27 +31,37 @@ class ProductShow extends Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    const {product, address} = this.props;
+    const {address} = this.props;
+    const product = Product(address);
 
     this.setState({ loading: true, errorMessage: '' });
 
-    try {
-      const accounts = await web3.eth.getAccounts();
-      console.log(product)
-      await product.methods
-        .createReview(
-          this.state.header,
-          this.state.text,
-          this.state.rate,
-          this.state.photoLink)
-        .send({
-          from: accounts[0]
-        });
+    if (this.state.header == '') {
+      this.setState({ errorMessage: "Please set Header" });
+    } else if (this.state.rate == '') {
+      this.setState({ errorMessage: "Please set Rating" });
+    } else if (this.state.text == '') {
+      this.setState({ errorMessage: "Please write Main Text" });
+    } else if (this.state.photoLink == '') {
+      this.setState({ errorMessage: "Please set Photo Link" });
+    } else {
+      try {
+        const accounts = await web3.eth.getAccounts();
+        await product.methods
+          .createReview(
+            this.state.header,
+            this.state.text,
+            this.state.rate,
+            this.state.photoLink)
+          .send({
+            from: accounts[0]
+          });
 
-      Router.pushRoute(
-        `/products/${address}`);
-    } catch (err) {
-      this.setState({ errorMessage: err.message });
+        Router.pushRoute(
+          `/products/${address}`);
+      } catch (err) {
+        this.setState({ errorMessage: err.message });
+      }
     }
 
     this.setState({ loading: false });
@@ -78,8 +88,8 @@ class ProductShow extends Component {
             <Rating icon='star'
               defaultRating={0}
               maxRating={5}
-              onChange={(e, { value }) =>
-               this.setState({ rate: value })}
+              onRate={(event, data) =>
+                this.setState({ rate: data.rating })}
             />
           </Form.Field>
 
