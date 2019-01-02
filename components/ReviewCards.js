@@ -4,10 +4,8 @@ import { Link } from '../routes'
 import ReviewCard from '../components/ReviewCard';
 
 export default props => {
-  // console.log(props);
   const finalElements = [];
   for (let index in props.items) {
-    console.log("Hi");
     finalElements.push(
       <ReviewCard review={props.items[index]} />
     );
