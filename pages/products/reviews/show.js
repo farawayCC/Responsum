@@ -20,7 +20,6 @@ class ReviewShow extends Component {
 
     return {
       review: reviews[props.index],
-      addresses: productsAddresses,
       avgRatings: avgRatings
     };
   }
