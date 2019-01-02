@@ -77,4 +77,8 @@ contract Product {
     function getReviewsCount() public view returns (uint) {
         return reviews.length;
     }
+    
+    function markAsDeleted() public restrictedCreator {
+      isDeleted = true;
+    }
 }
