@@ -14,13 +14,16 @@ export default props => {
           </Grid.Column>
 
           <Grid.Column width={8}>
-            <Header as='h1'>
-                <a>{props.review.header}</a>
-            </Header>
-            <Rating icon='star' defaultRating={props.review.rate} maxRating={5} disabled />
-            <Header as='h3'>{props.review.text}</Header>
-            <Header as='h3' >Author address: {props.review.author}</Header>
+            <Container>
+              <Header as='h1'>
+                  <a>{props.review.header}</a>
+              </Header>
+              <Rating icon='star' defaultRating={props.review.rate} maxRating={5} disabled />
+              <Header as='h3'>{props.review.text}</Header>
+              <Header as='h3' >Author address: {props.review.author}</Header>
+            </Container>
           </Grid.Column>
+
       </a>
       </Link>
     </Grid>

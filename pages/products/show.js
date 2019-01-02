@@ -81,7 +81,8 @@ class ProductShow extends Component {
       photoLink,
       category, //set by webpage from list of available categories
       creator,
-      avgRating
+      avgRating,
+      address
     } = this.props;
 
     return (
@@ -91,6 +92,7 @@ class ProductShow extends Component {
         avgRating={avgRating}
         category={category}
         reviewsCount={reviewsCount}
+        address={address}
       />
     );
   }
@@ -125,7 +127,7 @@ class ProductShow extends Component {
 
         <h3>{name} - review</h3>
 
-        <Grid celled='internally'>
+        <Grid >
           <Grid.Row>
             <Grid.Column >
               <div>

@@ -39,6 +39,7 @@ class ReviewShow extends Component {
     // console.log(review)
 
     return {
+      reviewsCount: reviewsCount,
       review: review,
       productName: productName,
       productPhotoLink: productPhotoLink,
@@ -56,9 +57,11 @@ class ReviewShow extends Component {
       productPhotoLink,
       productCategory, //set by webpage from list of available categories
       productCreator,
-      productAvgRating
+      productAvgRating,
+      address
     } = this.props;
 
+    console.log(reviewsCount);
     return (
       <ProductRender
         photoLink={productPhotoLink}
@@ -66,6 +69,7 @@ class ReviewShow extends Component {
         avgRating={productAvgRating}
         category={productCategory}
         reviewsCount={reviewsCount}
+        address={address}
       />
     );
   }
