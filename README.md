@@ -8,9 +8,7 @@ Copy repository on your computer
 
 Install npm
 
-```
-npm install npm@latest -g
-```
+https://www.npmjs.com/get-npm
 
 Install packages
 
