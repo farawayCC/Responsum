@@ -6,6 +6,7 @@ import Product from '../../../ethereum/product';
 import web3 from '../../../ethereum/web3'
 import ReviewForm from '../../../components/ReviewForm';
 import ReviewCards from '../../../components/ReviewCards';
+import ProductRender from '../../../components/ProductRender';
 
 import { Link } from '../../../routes';
 
@@ -22,17 +23,66 @@ class ReviewShow extends Component {
         })
     );
     const review = reviews[props.query.index];
-    console.log(review)
+    const productName = await product.methods.name().call();
+    const productPhotoLink = await product.methods.photoLink().call();
+    const productCategory = await product.methods.category().call();
+    const productCreator = await product.methods.creator().call();
+
+    //get average rating
+    let sum = 0;
+    for (var j = 0; j < reviewsCount; j++) {
+      sum=parseInt(sum)+parseInt(reviews[j].rate);
+    }
+    const productAvgRating=sum/reviewsCount;
+
     return {
-      review: review
+      review: review,
+      productName: productName,
+      productPhotoLink: productPhotoLink,
+      productCategory: productCategory,
+      productCreator: productCreator,
+      productAvgRating: productAvgRating
     };
   }
 
-  render() {
+  renderProduct() {
+    const {
+      reviewsCount,
+      productName,
+      productPhotoLink,
+      productCategory, //set by webpage from list of available categories
+      productCreator,
+      productAvgRating
+    } = this.props;
+
     return (
-      <Header as='h1'>
-        <a>Haallloo</a>
-      </Header>
+      <ProductRender
+        photoLink={productPhotoLink}
+        name={productName}
+        avgRating={productAvgRating}
+        category={productCategory}
+        reviewsCount={reviewsCount}
+      />
+    );
+  }
+
+  render() {
+    const {} = this.props
+    return (
+      <Layout>
+
+        <h3>review</h3>
+
+        <Grid>
+            <Grid.Column width={16}>
+              {this.renderProduct()}
+            </Grid.Column>
+
+            <Grid.Column width={16}>
+            </Grid.Column>
+
+        </Grid>
+      </Layout>
     );
   }
 }

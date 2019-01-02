@@ -64,10 +64,9 @@ contract Product {
     }
 
     function getSummary() public view returns (
-      Review[], string, string, string, address
+      string, string, string, address
       ) {
         return (
-          reviews,
           name,
           photoLink,
           category, //set by webpage from list of available categories

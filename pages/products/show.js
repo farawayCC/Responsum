@@ -6,6 +6,7 @@ import Product from '../../ethereum/product';
 import web3 from '../../ethereum/web3'
 import ReviewForm from '../../components/ReviewForm';
 import ReviewCards from '../../components/ReviewCards';
+import ProductRender from '../../components/ProductRender';
 
 import { Link } from '../../routes';
 
@@ -20,8 +21,6 @@ class ProductShow extends Component {
     const category = await product.methods.category().call();
     const creator = await product.methods.creator().call();
 
-    // const summary = await product.methods.getSummary().call();
-    // console.log(summary);
 
     //get reviews
     const reviewsCount = await product.methods.getReviewsCount().call();
@@ -86,22 +85,13 @@ class ProductShow extends Component {
     } = this.props;
 
     return (
-      <Grid celled>
-        <Grid.Row>
-          <Grid.Column width={5}>
-            <Image src={photoLink} />
-          </Grid.Column>
-
-          <Grid.Column width={11}>
-            <Container text>
-              <Header as='h1'>{name}</Header>
-              <Rating icon='star' defaultRating={avgRating} maxRating={5} disabled />
-              <Header as='h3'>Category: {category}</Header>
-              <Header as='h3'>Reviews Count: {reviewsCount}</Header>
-            </Container>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <ProductRender
+        photoLink={photoLink}
+        name={name}
+        avgRating={avgRating}
+        category={category}
+        reviewsCount={reviewsCount}
+      />
     );
   }
 
