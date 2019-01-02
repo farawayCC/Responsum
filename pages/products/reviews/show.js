@@ -5,7 +5,7 @@ import Layout from '../../../components/Layout';
 import Product from '../../../ethereum/product';
 import web3 from '../../../ethereum/web3'
 import ReviewForm from '../../../components/ReviewForm';
-import ReviewCards from '../../../components/ReviewCards';
+import ReviewCard from '../../../components/ReviewCard';
 import ProductRender from '../../../components/ProductRender';
 
 import { Link } from '../../../routes';
@@ -22,6 +22,7 @@ class ReviewShow extends Component {
           return product.methods.reviews(index).call();
         })
     );
+
     const review = reviews[props.query.index];
     const productName = await product.methods.name().call();
     const productPhotoLink = await product.methods.photoLink().call();
@@ -35,13 +36,16 @@ class ReviewShow extends Component {
     }
     const productAvgRating=sum/reviewsCount;
 
+    // console.log(review)
+
     return {
       review: review,
       productName: productName,
       productPhotoLink: productPhotoLink,
       productCategory: productCategory,
       productCreator: productCreator,
-      productAvgRating: productAvgRating
+      productAvgRating: productAvgRating,
+      address: props.query.address
     };
   }
 
@@ -66,6 +70,20 @@ class ReviewShow extends Component {
     );
   }
 
+  renderReview() {
+    const {
+      review,
+      address
+    } = this.props;
+    // console.log(review);
+    return <ReviewCard
+      key={0}
+      review={review}
+      address={address}
+      index={0}
+    />;
+  }
+
   render() {
     const {} = this.props
     return (
@@ -79,6 +97,7 @@ class ReviewShow extends Component {
             </Grid.Column>
 
             <Grid.Column width={16}>
+              {this.renderReview()}
             </Grid.Column>
 
         </Grid>

@@ -31,7 +31,7 @@ class ProductShow extends Component {
           return product.methods.reviews(index).call();
         })
     );
-
+    // console.log(reviews[0]);
     //get average rating
     let sum = 0;
     for (var j = 0; j < reviewsCount; j++) {
@@ -109,10 +109,10 @@ class ProductShow extends Component {
     for (let index in headers) {
       items.push({
         header: headers[index],
-        texts: texts[index],
-        rates: rates[index],
-        images: images[index],
-        creators: creators[index]
+        text: texts[index],
+        rate: rates[index],
+        photoLink: images[index],
+        author: creators[index]
       });
     }
     return <ReviewCards items={items} address={address} />;
@@ -125,16 +125,20 @@ class ProductShow extends Component {
 
         <h3>{name} - review</h3>
 
-        <Grid>
-            <Grid.Column width={16}>
+        <Grid celled='internally'>
+          <Grid.Row>
+            <Grid.Column >
               <div>
                 {this.renderProduct()}
               </div>
             </Grid.Column>
+          </Grid.Row>
 
-            <Grid.Column width={16}>
+          <Grid.Row>
+            <Grid.Column >
               {this.renderReviews()}
             </Grid.Column>
+          </Grid.Row>
 
         </Grid>
       </Layout>
