@@ -7,7 +7,11 @@ export default props => {
   const finalElements = [];
   for (let index in props.items) {
     finalElements.push(
-      <ReviewCard review={props.items[index]} />
+      <ReviewCard
+        key={index}
+        review={props.items[index]}
+        address={props.address}
+        index={index}/>
     );
   }
 

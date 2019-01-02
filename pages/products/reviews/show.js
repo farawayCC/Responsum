@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
-import { Button, Table } from 'semantic-ui-react';
-import { Link } from '../../../routes';
+import { Card, Icon, Image, Grid, Button, Divider, Container, Header, Rating }
+  from 'semantic-ui-react';
 import Layout from '../../../components/Layout';
-import Campaign from '../../../ethereum/campaign';
-import RequestRow from '../../../components/RequestRow';
+import Product from '../../../ethereum/product';
+import web3 from '../../../ethereum/web3'
+import ReviewForm from '../../../components/ReviewForm';
+import ReviewCards from '../../../components/ReviewCards';
+
+import { Link } from '../../../routes';
 
 class ReviewShow extends Component {
   static async getInitialProps(props) {
-    const { address } = props.query;
-    const product = Campaign(address);
+    const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
+    //get reviews
     const reviewsCount = await product.methods.getReviewsCount().call();
     const reviews = await Promise.all(
       Array(parseInt(reviewsCount))
@@ -17,58 +21,20 @@ class ReviewShow extends Component {
           return product.methods.reviews(index).call();
         })
     );
-
+    const review = reviews[props.query.index];
+    console.log(review)
     return {
-      review: reviews[props.index],
-      avgRatings: avgRatings
+      review: review
     };
   }
 
-  renderRows() {
-    return this.props.requests.map((request, index) => {
-      return (
-        <RequestRow
-          key={index}
-          id={index}
-          request={request}
-          address={this.props.address}
-          approversCount={this.props.approversCount}
-        />
-      );
-    });
-  }
-
   render() {
-    const { Header, Row, HeaderCell, Body } = Table;
-
     return (
-      <Layout>
-        <h3>Requests</h3>
-        <Link route={`/campaigns/${this.props.address}/requests/new`}>
-          <a>
-            <Button primary floated="right" style={{ marginBottom: 10 }}>
-              Add Request
-            </Button>
-          </a>
-        </Link>
-        <Table>
-          <Header>
-            <Row>
-              <HeaderCell>ID</HeaderCell>
-              <HeaderCell>Description</HeaderCell>
-              <HeaderCell>Amount</HeaderCell>
-              <HeaderCell>Recipient</HeaderCell>
-              <HeaderCell>Approval Count</HeaderCell>
-              <HeaderCell>Approve</HeaderCell>
-              <HeaderCell>Finalize</HeaderCell>
-            </Row>
-          </Header>
-          <Body>{this.renderRows()}</Body>
-        </Table>
-        <div>Found {this.props.requestCount} requests.</div>
-      </Layout>
+      <Header as='h1'>
+        <a>Haallloo</a>
+      </Header>
     );
   }
 }
 
-export default ReviewIndex;
+export default ReviewShow;

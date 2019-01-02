@@ -20,6 +20,9 @@ class ProductShow extends Component {
     const category = await product.methods.category().call();
     const creator = await product.methods.creator().call();
 
+    const summary = await product.methods.getSummary().call();
+    // console.log(summary);
+
     //get reviews
     const reviewsCount = await product.methods.getReviewsCount().call();
     const reviews = await Promise.all(
@@ -109,7 +112,9 @@ class ProductShow extends Component {
       texts,
       rates,
       images,
-      creators } = this.props;
+      creators,
+      address
+    } = this.props;
     let items = [];
     for (let index in headers) {
       items.push({
@@ -120,7 +125,7 @@ class ProductShow extends Component {
         creators: creators[index]
       });
     }
-    return <ReviewCards items={items} />;
+    return <ReviewCards items={items} address={address} />;
   }
 
   render() {
@@ -138,9 +143,7 @@ class ProductShow extends Component {
             </Grid.Column>
 
             <Grid.Column width={16}>
-            <Link route={`/products/${address}/reviews/`}>
-              <a>{this.renderReviews()}</a>
-            </Link>
+              {this.renderReviews()}
             </Grid.Column>
 
         </Grid>
