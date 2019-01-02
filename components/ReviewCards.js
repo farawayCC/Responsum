@@ -9,7 +9,6 @@ export default props => {
     finalElements.push(
       <ReviewCard review={props.items[index]} />
     );
-    // console.log(finalElements);
   }
 
   return finalElements;

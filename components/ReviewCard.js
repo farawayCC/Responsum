@@ -3,8 +3,6 @@ import { Grid, Image, Container, Header, Rating } from 'semantic-ui-react'
 import { Link } from '../routes'
 
 export default props => {
-  console.log(props.review);
-
   const finalElement = (
         <Grid >
             <Grid.Column width={4}>

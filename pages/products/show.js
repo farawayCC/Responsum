@@ -104,24 +104,6 @@ class ProductShow extends Component {
 
 
   renderReviews() {
-    // const {
-    //   reviewsCount,
-    //   reviews,
-    //   address
-    // } = this.props;
-    //
-    // const reviewCards = [];
-    // let ijk = 0;
-    // reviews.map(function(review) {
-    //   reviewCards.push(
-    //     <Divider />,
-    //     <ReviewCard review={review} address={address} index={ijk}/>
-    //   );
-    //   ijk = ijk+1;
-    // });
-    // return reviewCards.reverse();
-
-
     const {
       headers,
       texts,
@@ -139,14 +121,7 @@ class ProductShow extends Component {
       });
     }
     return <ReviewCards items={items} />;
-
   }
-
-
-
-
-
-
 
   render() {
     const { name, address } = this.props;
