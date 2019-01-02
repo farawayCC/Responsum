@@ -20,7 +20,7 @@ class ProductShow extends Component {
     const category = await product.methods.category().call();
     const creator = await product.methods.creator().call();
 
-    const summary = await product.methods.getSummary().call();
+    // const summary = await product.methods.getSummary().call();
     // console.log(summary);
 
     //get reviews
