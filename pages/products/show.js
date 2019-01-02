@@ -5,7 +5,8 @@ import Layout from '../../components/Layout';
 import Product from '../../ethereum/product';
 import web3 from '../../ethereum/web3'
 import ReviewForm from '../../components/ReviewForm';
-import ReviewCard from '../../components/ReviewCard';
+import ReviewCards from '../../components/ReviewCards';
+import ProductRender from '../../components/ProductRender';
 
 import { Link } from '../../routes';
 
@@ -13,12 +14,15 @@ class ProductShow extends Component {
   static async getInitialProps(props) {
     const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
-    // const summary = await product.methods.getSummary().call();
+    //Get base values
+    const address = props.query.address;
     const name = await product.methods.name().call();
     const photoLink = await product.methods.photoLink().call();
     const category = await product.methods.category().call();
     const creator = await product.methods.creator().call();
 
+
+    //get reviews
     const reviewsCount = await product.methods.getReviewsCount().call();
     const reviews = await Promise.all(
       Array(parseInt(reviewsCount))
@@ -27,12 +31,29 @@ class ProductShow extends Component {
           return product.methods.reviews(index).call();
         })
     );
-
+    // console.log(reviews[0]);
+    //get average rating
     let sum = 0;
     for (var j = 0; j < reviewsCount; j++) {
       sum=parseInt(sum)+parseInt(reviews[j].rate);
     }
     const avgRating=sum/reviewsCount;
+
+    //get reviews compononets
+    const headers = [];
+    const texts = [];
+    const rates = [];
+    const images = [];
+    const creators = [];
+
+
+    for (var i = 0; i < reviewsCount; i++) {
+      headers.push(reviews[i].header);
+      texts.push(reviews[i].text);
+      rates.push(reviews[i].rate);
+      images.push(reviews[i].photoLink);
+      creators.push(reviews[i].author);
+    }
 
     return {
       reviewsCount: reviewsCount,
@@ -41,7 +62,14 @@ class ProductShow extends Component {
       name: name,
       photoLink: photoLink,
       category: category, //set by webpage from list of available categories
-      creator: creator
+      creator: creator,
+      address: address,
+
+      headers: headers,
+      texts: texts,
+      rates: rates,
+      images: images,
+      creators: creators
     };
   }
 
@@ -53,63 +81,66 @@ class ProductShow extends Component {
       photoLink,
       category, //set by webpage from list of available categories
       creator,
-      avgRating
+      avgRating,
+      address
     } = this.props;
 
     return (
-      <Grid celled>
-        <Grid.Row>
-          <Grid.Column width={5}>
-            <Image src={photoLink} />
-          </Grid.Column>
-
-          <Grid.Column width={11}>
-            <Container text>
-              <Header as='h1'>{name}</Header>
-              <Rating icon='star' defaultRating={avgRating} maxRating={5} disabled />
-              <Header as='h3'>Category: {category}</Header>
-              <Header as='h3'>Reviews Count: {reviewsCount}</Header>
-            </Container>
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+      <ProductRender
+        photoLink={photoLink}
+        name={name}
+        avgRating={avgRating}
+        category={category}
+        reviewsCount={reviewsCount}
+        address={address}
+      />
     );
   }
 
 
   renderReviews() {
     const {
-      reviewsCount,
-      reviews
+      headers,
+      texts,
+      rates,
+      images,
+      creators,
+      address
     } = this.props;
-
-    const reviewCards = [];
-    reviews.map(function(review) {
-      reviewCards.push(
-        <Divider />,
-        <ReviewCard review={review} />
-      );
-    });
-
-    return (<div>{reviewCards.reverse()}</div>);
+    let items = [];
+    for (let index in headers) {
+      items.push({
+        header: headers[index],
+        text: texts[index],
+        rate: rates[index],
+        photoLink: images[index],
+        author: creators[index]
+      });
+    }
+    return <ReviewCards items={items} address={address} />;
   }
 
   render() {
-    const {name} = this.props;
+    const { name, address } = this.props;
     return (
       <Layout>
 
         <h3>{name} - review</h3>
 
-        <Grid>
-            <Grid.Column width={16}>
-
-              {this.renderProduct()}
+        <Grid >
+          <Grid.Row>
+            <Grid.Column >
+              <div>
+                {this.renderProduct()}
+              </div>
             </Grid.Column>
+          </Grid.Row>
 
-            <Grid.Column width={16}>
+          <Grid.Row>
+            <Grid.Column >
               {this.renderReviews()}
             </Grid.Column>
+          </Grid.Row>
 
         </Grid>
       </Layout>

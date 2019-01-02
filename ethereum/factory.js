@@ -3,7 +3,7 @@ import ProductFactory from './build/ProductFactory.json';
 
 const instance = new web3.eth.Contract(
   JSON.parse(ProductFactory.interface),
-  '0xd05446083329f4d1f223a2ddab8d1a64ef61dd29'
+  '0x242a451d7305ef79173bf9758826f64632b21c6f'
 );
 
 export default instance;

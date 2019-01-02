@@ -7,7 +7,9 @@ import { Router } from '../../routes';
 
 class CampaignNew extends Component {
   state = {
-    minimumContribution: '',
+    name: '',
+    category: '',
+    photoLink: '',
     errorMessage: '',
     loading: false
   };
@@ -20,7 +22,10 @@ class CampaignNew extends Component {
     try {
       const accounts = await web3.eth.getAccounts();
       await factory.methods
-        .createCampaign(this.state.minimumContribution)
+        .createProduct(
+          this.state.name,
+          this.state.category,
+          this.state.photoLink)
         .send({
           from: accounts[0]
         });
@@ -34,19 +39,46 @@ class CampaignNew extends Component {
   };
 
   render() {
+    const mainCategories = [
+      { key: 'b', text: 'Beauty', value: 'beauty' },
+      { key: 'c', text: 'Cars', value: 'cars' },
+      { key: 'f', text: 'For Child', value: 'for_child' },
+      { key: 'o', text: 'Other', value: 'other' }
+    ];
     return (
       <Layout>
-        <h3>Create a Campaign</h3>
+        <h3>Create a Product</h3>
 
         <Form onSubmit={this.onSubmit} error={!!this.state.errorMessage}>
           <Form.Field>
-            <label>Minimum Contribution</label>
+            <label>Name</label>
             <Input
-              label="wei"
-              labelPosition="right"
-              value={this.state.minimumContribution}
+              value={this.state.name}
               onChange={event =>
-                this.setState({ minimumContribution: event.target.value })}
+                this.setState({ name: event.target.value })}
+
+              placeholder='Name of a Product'
+            />
+          </Form.Field>
+
+          <Form.Field>
+            <Form.Select fluid
+            label='Category'
+            options={mainCategories}
+            placeholder='Choose a category for Product'
+            value={this.state.category}
+            onChange={(e, { value }) =>
+             this.setState({ category: value })}
+          />
+          </Form.Field>
+
+          <Form.Field>
+            <label>Photo link</label>
+            <Input
+              value={this.state.photoLink}
+              onChange={event =>
+                this.setState({ photoLink: event.target.value })}
+              placeholder='Paste here a link to a photo'
             />
           </Form.Field>
 
