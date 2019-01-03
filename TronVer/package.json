@@ -1,0 +1,34 @@
+{
+  "name": "decreview",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha",
+    "dev": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/farawayCC/DecReview.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/farawayCC/DecReview/issues"
+  },
+  "homepage": "https://github.com/farawayCC/DecReview#readme",
+  "dependencies": {
+    "fs-extra": "^7.0.1",
+    "ganache-cli": "^6.2.5",
+    "mocha": "^5.2.0",
+    "next": "^4.2.3",
+    "next-routes": "^1.4.2",
+    "node": "^11.5.0",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
+    "semantic-ui-react": "^0.84.0",
+    "solc": "^0.4.17",
+    "truffle-hdwallet-provider": "^1.0.1",
+    "web3": "^1.0.0-beta.37"
+  }
+}
