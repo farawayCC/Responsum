@@ -5,12 +5,20 @@
 
 # Current state
 
-Nowadays project is under rapid development. Core functionality is already presented using Ethereum blockchain (http://40bdd856.ngrok.io/), but we are migrating to Tron network because during development we found out that eth blockchain is too slow for that kind of project and require a lot of money to proceed transactions (create reviews). It will give our product more usability because with it we can provide a solution to review products without a need of going to cryptocurrency exchange. You can learn more about this great blockchain at https://developers.tron.network/docs/getting-started 
+Nowadays project is under rapid development. Core functionality is already presented using Ethereum blockchain (link in repository's head), but we are migrating to Tron network because during development we found out that eth blockchain is too slow for that kind of project and require a lot of money to proceed transactions (create reviews). It will give our product more usability because with it we can provide a solution to review products without a need of going to cryptocurrency exchange. You can learn more about this great blockchain at https://developers.tron.network/docs/getting-started 
 
-# Installing on localhost
+# How to try
+### Note
+
+Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
+
+## Our web page
+http://40bdd856.ngrok.io/
+It is very slow and unstable, because runned on my old computer in cupboard. We think that it is suitable during development. So we recomend to run your own instance on localhost using instruction below
+
+## Installing on localhost
 
 Clone repository on your computer
-
 ```
 git clone https://github.com/farawayCC/DecReview
 ```
@@ -19,9 +27,7 @@ Install npm
 
 https://www.npmjs.com/get-npm
 
-
 Install packages
-
 ```
 npm install --save web3 solc@0.4.17 next@4.2.3 ganache-cli react react-dom semantic-ui-react fs-extra truffle-hdwallet-provider
 ```
@@ -42,9 +48,6 @@ npm run dev
 
 Navigate to http://localhost:3000 in your browser
 
-### Note
-
-Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
 
 ## Authors
 
