@@ -117,31 +117,22 @@ class ProductShow extends Component {
         author: creators[index]
       });
     }
-    return <ReviewCards items={items} address={address} />;
+    return (
+        <ReviewCards items={items} address={address} />
+    );
   }
 
   render() {
     const { name, address } = this.props;
     return (
       <Layout>
-
         <h3>{name} - review</h3>
-
-        <Grid >
+        <Grid>
           <Grid.Row>
-            <Grid.Column >
-              <div>
-                {this.renderProduct()}
-              </div>
-            </Grid.Column>
+            {this.renderProduct()}
           </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column >
-              {this.renderReviews()}
-            </Grid.Column>
-          </Grid.Row>
-
+          {this.renderReviews()}
         </Grid>
       </Layout>
     );
