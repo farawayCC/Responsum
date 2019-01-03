@@ -1,6 +1,6 @@
-EthVer/.next/
-EthVer/node_modules/
+EthVer/.next
+EthVer/node_modules
 EthVer/lib
-TronVer/.next/
-TronVer/node_modules/
+TronVer/.next
+TronVer/node_modules
 TronVer/lib
