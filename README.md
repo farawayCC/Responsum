@@ -7,9 +7,13 @@
 
 Nowadays project is under rapid development. Core functionality is already presented using Ethereum blockchain (http://c15dff73.ngrok.io), but we are migrating to Tron network. It will give our product more usability because with it we can provide a solution to review products without a need of going to cryptocurrency exchange. You can learn more about this great blockchain at https://developers.tron.network/docs/getting-started 
 
-### Installing on localhost
+# Installing on localhost
 
-Copy repository on your computer
+Clone repository on your computer
+
+```
+git clone https://github.com/farawayCC/DecReview
+```
 
 Install npm
 
@@ -33,6 +37,10 @@ npm run dev
 ```
 
 Navigate to http://localhost:3000 in your browser
+
+## Note
+
+Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
 
 ## Authors
 
