@@ -30,6 +30,10 @@ npm install --save web3 solc@0.4.17 next@4.2.3 ganache-cli react react-dom seman
 
 Navigate to root directory DecReview/
 
+```
+cd DevReview
+```
+
 Start server.js
 
 ```
