@@ -38,7 +38,7 @@ npm run dev
 
 Navigate to http://localhost:3000 in your browser
 
-## Note
+# Note
 
 Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
 
