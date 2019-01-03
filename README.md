@@ -14,7 +14,8 @@ Currently project is in beta so it is runned on rinkeby network. Don't forget to
 
 ## Our web page
 http://40bdd856.ngrok.io/
-It is very slow and unstable, because runned on my old computer in cupboard. We think that it is suitable during development. So we recomend to run your own instance on localhost using instruction below
+
+It is very slow and unstable because run on an old computer in a cupboard. We think that it is suitable for development. So we recommend running your own instance on localhost using instruction below
 
 ## Installing on localhost
 
