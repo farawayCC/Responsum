@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Form, Input, Message, Button } from 'semantic-ui-react';
-import Product from '../ethereum/product';
-import web3 from '../ethereum/web3';
+import Product from '../tron/product';
+import web3 from '../tron/web3';
 import { Router } from '../routes';
 
 class ReviewForm extends Component {

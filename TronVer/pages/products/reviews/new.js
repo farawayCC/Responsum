@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Button, Form, Input, Message, Header, Rating }
   from 'semantic-ui-react';
 import Layout from '../../../components/Layout';
-import Product from '../../../ethereum/product';
-import web3 from '../../../ethereum/web3'
+import Product from '../../../tron/product';
+import web3 from '../../../tron/web3'
 import ReviewForm from '../../../components/ReviewForm';
 import ReviewCards from '../../../components/ReviewCards';
 import { Router } from '../../../routes';

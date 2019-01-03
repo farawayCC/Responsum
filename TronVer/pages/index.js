@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Card, Button } from 'semantic-ui-react';
-import factory from '../ethereum/factory';
-import Product from '../ethereum/product';
+import factory from '../tron/factory';
+import Product from '../tron/product';
 import Layout from '../components/Layout';
 import { Link } from '../routes';
+import TronWeb from 'tronweb';
+import Utils from '../tron/utils/index';
 
 class ProductIndex extends Component {
   static async getInitialProps() {
