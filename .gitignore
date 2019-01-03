@@ -1,2 +1,4 @@
-.next/
-node_modules/
+EthVer/.next/
+EthVer/node_modules/
+TronVer/.next/
+TronVer/node_modules/
