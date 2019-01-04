@@ -3,7 +3,6 @@ import { Card, Icon, Image, Grid, Button, Divider, Container, Header, Rating }
   from 'semantic-ui-react';
 import Layout from '../../../components/Layout';
 import Product from '../../../tron/product';
-import web3 from '../../../tron/web3'
 import ReviewForm from '../../../components/ReviewForm';
 import ReviewCard from '../../../components/ReviewCard';
 import ProductRender from '../../../components/ProductRender';

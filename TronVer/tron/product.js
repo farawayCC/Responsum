@@ -1,6 +1,6 @@
-import web3 from './web3';
+import tronWeb from './tronweb';
 import Product from './build/Product.json';
 
 export default address => {
-  return new web3.eth.Contract(JSON.parse(Product.interface), address);
+  return new tronWeb.contract().at(address);
 };

@@ -28,6 +28,7 @@
     "react-dom": "^16.7.0",
     "semantic-ui-react": "^0.84.0",
     "solc": "^0.4.17",
+    "sweetalert2": "^7.33.1",
     "tronbox": "^2.3.9",
     "tronweb": "^2.1.20",
     "truffle-hdwallet-provider": "^1.0.1",
