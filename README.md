@@ -13,9 +13,9 @@ Nowadays project is under rapid development. Core functionality is already prese
 Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
 
 ## Our web page
-http://173483ac.ngrok.io/
+http://decreview.ngrok.io
 
-It is very slow and unstable because run on an old computer in a cupboard. We think that it is suitable for development. So we recommend running your own instance on localhost using instruction below
+It can be a bit slow and unstable because run on an computer in a cupboard. We think that it is suitable for development. So now we recommend running your own instance on localhost using instruction below
 
 ## Installing on localhost
 
