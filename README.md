@@ -13,7 +13,7 @@ Nowadays project is under rapid development. Core functionality is already prese
 Currently project is in beta so it is runned on rinkeby network. Don't forget to switch Metamask to use Rinkeby test network 
 
 ## Our web page
-http://40bdd856.ngrok.io/
+http://173483ac.ngrok.io/
 
 It is very slow and unstable because run on an old computer in a cupboard. We think that it is suitable for development. So we recommend running your own instance on localhost using instruction below
 
