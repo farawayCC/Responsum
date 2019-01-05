@@ -13,7 +13,7 @@ export default props => {
         />
       </Head>
 
-      <Header />
+      <Header></Header>
       {props.children}
     </Container>
   );

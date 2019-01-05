@@ -11,17 +11,19 @@ import Utils from '../tron/utils/index';
 
 class ProductIndex extends Component {
   state = {
-        tronWeb: {
-            installed: false,
-            loggedIn: false
-        },
-        products: []
-    }
-  constructor(props) {
-    super(props);
-
+    tronWeb: {
+        installed: false,
+        loggedIn: false
+    },
+    products: []
   }
+
+  static async getInitialProps() {
+    return {};
+  }
+
   async componentDidMount() {
+    console.log("Starting componentDidMount(). window.tronWeb.ready = " + window.tronWeb.ready);
     await new Promise(resolve => {
         const tronWebState = {
             installed: !!window.tronWeb,
@@ -97,8 +99,6 @@ class ProductIndex extends Component {
     }
 
     Utils.setTronWeb(window.tronWeb);
-
-    this.startEventListener();
     this.fetchProducts();
   }
 
@@ -107,32 +107,20 @@ class ProductIndex extends Component {
   }
 
   async fetchProducts() {
+      console.log("Starting fetchProducts()")
       this.setState({
           products: await Utils.fetchProducts()
       });
+      console.log("After fetchProducts() execution. this.state.products = " + this.state.products);
   }
 
-  // static async getInitialProps() {
-  //       //This will create a new Factory contract for you
-  //   // let factoryContract = await tronWeb.contract().new({
-  //   //     abi: Utils.factoryAbi,
-  //   //     bytecode: Utils.factoryBytecode,
-  //   //     feeLimit: 1000000000
-  //   // });
-  //   // console.log(factoryContract);
-  //
-  //   const _factory = await tronWeb.trx.getContract('TNc9kFnhjjZj8EaUvgFyYkXZbh1d4574v7');
-  //   console.log("_factory: \n" + _factory + "\n---------------------END_OF_ _factory------------------------------  ");
-  //   const products = false;//await factory.getDeployedProducts().call();
-  //   return { products };
-  // }
-
   renderProducts() {
+    console.log("------------------In renderProducts()")
       const {
         products
       } = this.state
-      const items = [];
       console.log("In renderProducts() we got Products array: " + products);
+      const items = [];
       for (let index in products) {
         items.push({
           header: products[index].name,
@@ -146,44 +134,32 @@ class ProductIndex extends Component {
         });
       }
 
-      //DELETE THIS PLS
-    items.push({
-        header: '!! TEST Kuss',
-        description: 'Nice kussi',
-        meta: ("Avg rating: "+4.5),
-        fluid: true
-      },
-      {
-        header: '!! TEST BMW 520',
-        description: 'Nice Car',
-        meta: ("Avg rating: "+4.6),
-        fluid: true
-      }
-    )
     return <Card.Group items={items} />;
   }
 
   render() {
-    console.log("Hi");
+    console.log("Starting render()");
     return (
       <Layout>
         <div>
-          <h3>Last Products</h3>
+            <h3>Last Products</h3>
 
-          <Link route="/products/new">
-            <a>
-              <Button
-                floated="right"
-                content="Create Product"
-                icon="add circle"
-                primary
-              />
-            </a>
-          </Link>
-          {this.renderProducts}
+            <Link route="/products/new">
+              <a>
+                <Button
+                  floated="right"
+                  content="Create Product"
+                  icon="add circle"
+                  primary
+                />
+              </a>
+            </Link>
+            {console.log("In render(), right Before this.renderProducts")}
+            {this.renderProducts()}
+            {console.log("In render(), After this.renderProducts")}
         </div>
       </Layout>
-    )
+    );
   }
 }
 

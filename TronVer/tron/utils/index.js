@@ -11,16 +11,17 @@ const utils = {
     },
 
     async fetchProducts() {
+        // console.log("In Utils.fetchProducts()");
         const deployedProducts = await this.contract.getDeployedProducts().call();
         const products = [];
         //show last 5 products
         for (var i = 0; i < 4; i++) {
             const address = deployedProducts[deployedProducts.length-1-i];
-            const product = fetchProduct(address);
+            const product = this.fetchProduct(address);
             products.push(product);
         }
 
-        console.log("Fetched products: " + products);
+        // console.log("Fetched products: " + products);
         return {
           products
         };
@@ -33,6 +34,7 @@ const utils = {
       const category = await productContract.category().call();
       const avgRating = getAvgRate(address);
 
+      console.log("Fetched product.name: " +name);
       return {
         name,
         photoLink,
@@ -46,13 +48,17 @@ const utils = {
       const productContract = tronWeb.contract(this.productAbi, address);
       const avgRate = 0;
       const reviewsCount = await productContract.getReviewsCount().call();
+      console.log("Starting to get reviews");
       const reviews = await Promise.all(
         Array(parseInt(reviewsCount))
           .fill()
           .map((element, index) => {
             return productContract.reviews(index).call();
           })
-      );
+      ).catch(err => {
+        console.log("Error while trying to get all reviews for address: " + address + ". \n Error message: " + err.message)
+      });
+      console.log("Fetched reviews: " + reviews);
       let sum = 0;
       for (var j = 0; j < reviewsCount; j++) {
         sum=parseInt(sum)+parseInt(reviews[j].rate);
