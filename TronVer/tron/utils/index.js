@@ -1,8 +1,68 @@
-const contractAddress = 'TFM68QBt4bD9YqYCxp4BhyaUYn4uzQXrBJ'
+// const contractAddress = 'TFM68QBt4bD9YqYCxp4BhyaUYn4uzQXrBJ'
 
 const utils = {
     tronWeb: false,
     contract: false,
+    factoryContractAddress: 'TFM68QBt4bD9YqYCxp4BhyaUYn4uzQXrBJ',
+
+    setTronWeb(tronWeb) {
+        this.tronWeb = tronWeb;
+        this.contract = tronWeb.contract(this.factoryAbi, this.factoryContractAddress)
+    },
+
+    async fetchProducts() {
+        const deployedProducts = await this.contract.getDeployedProducts().call();
+        const products = [];
+        //show last 5 products
+        for (var i = 0; i < 4; i++) {
+            const address = deployedProducts[deployedProducts.length-1-i];
+            const product = fetchProduct(address);
+            products.push(product);
+        }
+
+        console.log("Fetched products: " + products);
+        return {
+          products
+        };
+    },
+
+    async fetchProduct(address) {
+      const productContract = tronWeb.contract(this.productAbi, address);
+      const name = await productContract.name().call();
+      const photoLink = await productContract.photoLink().call();
+      const category = await productContract.category().call();
+      const avgRating = getAvgRate(address);
+
+      return {
+        name,
+        photoLink,
+        category,
+        avgRating,
+        address
+      };
+    },
+
+    async getAvgRate(address) {
+      const productContract = tronWeb.contract(this.productAbi, address);
+      const avgRate = 0;
+      const reviewsCount = await productContract.getReviewsCount().call();
+      const reviews = await Promise.all(
+        Array(parseInt(reviewsCount))
+          .fill()
+          .map((element, index) => {
+            return productContract.reviews(index).call();
+          })
+      );
+      let sum = 0;
+      for (var j = 0; j < reviewsCount; j++) {
+        sum=parseInt(sum)+parseInt(reviews[j].rate);
+      }
+      const avgRating = (sum/reviewsCount);
+
+      return {
+        avgRating
+      };
+    },
 
     productAbi: [{"constant":true,"inputs":[],"name":"creator","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"name","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"getReviewsCount","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"newHeader","type":"string"},{"name":"newText","type":"string"},{"name":"newRate","type":"uint256"},{"name":"newPhotoLink","type":"string"}],"name":"createReview","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[],"name":"markAsDeleted","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":false,"inputs":[{"name":"index","type":"uint256"}],"name":"upvoteReview","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[],"name":"getSummary","outputs":[{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"string"},{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"photoLink","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"isDeleted","outputs":[{"name":"","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[{"name":"","type":"uint256"}],"name":"reviews","outputs":[{"name":"header","type":"string"},{"name":"text","type":"string"},{"name":"rate","type":"uint256"},{"name":"photoLink","type":"string"},{"name":"author","type":"address"},{"name":"isDeleted","type":"bool"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"category","outputs":[{"name":"","type":"string"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"productName","type":"string"},{"name":"productCategory","type":"string"},{"name":"productPhotoLink","type":"string"},{"name":"productCreator","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"}],
 
