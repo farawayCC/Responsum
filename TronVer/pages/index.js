@@ -6,7 +6,6 @@ import tronWeb from '../tron/tronweb';
 
 import Layout from '../components/Layout';
 import { Link } from '../routes';
-import Swal from 'sweetalert2';
 import Utils from '../tron/utils/index';
 
 class ProductIndex extends Component {
@@ -107,7 +106,6 @@ class ProductIndex extends Component {
   }
 
   async fetchProducts() {
-      console.log("Starting fetchProducts()")
       this.setState({
           products: await Utils.fetchProducts()
       });
@@ -115,7 +113,6 @@ class ProductIndex extends Component {
   }
 
   renderProducts() {
-    console.log("------------------In renderProducts()")
       const {
         products
       } = this.state
@@ -154,9 +151,7 @@ class ProductIndex extends Component {
                 />
               </a>
             </Link>
-            {console.log("In render(), right Before this.renderProducts")}
             {this.renderProducts()}
-            {console.log("In render(), After this.renderProducts")}
         </div>
       </Layout>
     );

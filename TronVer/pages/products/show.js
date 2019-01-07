@@ -2,123 +2,183 @@ import React, { Component } from 'react';
 import { Card, Icon, Image, Grid, Button, Divider, Container, Header, Rating }
   from 'semantic-ui-react';
 import Layout from '../../components/Layout';
-import Product from '../../tron/product';
-import ReviewForm from '../../components/ReviewForm';
-import ReviewCards from '../../components/ReviewCards';
+// import Product from '../../tron/product';
+// import ReviewForm from '../../components/ReviewForm';
+// import ReviewCards from '../../components/ReviewCards';
 import ProductRender from '../../components/ProductRender';
 
-import { Link } from '../../routes';
+import tronWeb from '../../tron/tronweb';
+import { Router } from '../../routes';
+import Utils from '../../tron/utils/index';
+
 
 class ProductShow extends Component {
-  static async getInitialProps(props) {
-    const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
-
-    //Get base values
-    const address = props.query.address;
-    const name = await product.methods.name().call();
-    const photoLink = await product.methods.photoLink().call();
-    const category = await product.methods.category().call();
-    const creator = await product.methods.creator().call();
-
-
-    //get reviews
-    const reviewsCount = await product.methods.getReviewsCount().call();
-    const reviews = await Promise.all(
-      Array(parseInt(reviewsCount))
-        .fill()
-        .map((element, index) => {
-          return product.methods.reviews(index).call();
-        })
-    );
-    // console.log(reviews[0]);
-    //get average rating
-    let sum = 0;
-    for (var j = 0; j < reviewsCount; j++) {
-      sum=parseInt(sum)+parseInt(reviews[j].rate);
-    }
-    const avgRating=sum/reviewsCount;
-
-    //get reviews compononets
-    const headers = [];
-    const texts = [];
-    const rates = [];
-    const images = [];
-    const creators = [];
-
-
-    for (var i = 0; i < reviewsCount; i++) {
-      headers.push(reviews[i].header);
-      texts.push(reviews[i].text);
-      rates.push(reviews[i].rate);
-      images.push(reviews[i].photoLink);
-      creators.push(reviews[i].author);
-    }
-
-    return {
-      reviewsCount: reviewsCount,
-      reviews: reviews,
-      avgRating: avgRating,
-      name: name,
-      photoLink: photoLink,
-      category: category, //set by webpage from list of available categories
-      creator: creator,
-      address: address,
-
-      headers: headers,
-      texts: texts,
-      rates: rates,
-      images: images,
-      creators: creators
-    };
+  state = {
+    tronWeb: {
+        installed: false,
+        loggedIn: false
+    },
+    products: []
   }
 
+  async componentDidMount() {
+      await new Promise(resolve => {
+          const tronWebState = {
+              installed: !!window.tronWeb,
+              loggedIn: window.tronWeb && window.tronWeb.ready
+          };
+
+          if(tronWebState.installed) {
+              this.setState({
+                  tronWeb:
+                  tronWebState
+              });
+
+              return resolve();
+          }
+
+          let tries = 0;
+
+          const timer = setInterval(() => {
+              if(tries >= 10) {
+                  const TRONGRID_API = "https://api.shasta.trongrid.io";
+
+                  window.tronWeb = new TronWeb(
+                      TRONGRID_API,
+                      TRONGRID_API,
+                      TRONGRID_API
+                  );
+
+                  this.setState({
+                      tronWeb: {
+                          installed: false,
+                          loggedIn: false
+                      }
+                  });
+
+                  clearInterval(timer);
+                  return resolve();
+              }
+
+              tronWebState.installed = !!window.tronWeb;
+              tronWebState.loggedIn = window.tronWeb && window.tronWeb.ready;
+
+              if(!tronWebState.installed)
+                  return tries++;
+
+              this.setState({
+                  tronWeb: tronWebState
+              });
+
+              resolve();
+          }, 100);
+      });
+
+      if(!this.state.tronWeb.loggedIn) {
+          // Set default address (foundation address) used for contract calls
+          // Directly overwrites the address object as TronLink disabled the
+          // function call
+          window.tronWeb.defaultAddress = {
+              hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
+              base58: FOUNDATION_ADDRESS
+          };
+
+          window.tronWeb.on('addressChanged', () => {
+              if(this.state.tronWeb.loggedIn)
+                  return;
+
+              this.setState({
+                  tronWeb: {
+                      installed: true,
+                      loggedIn: true
+                  }
+              });
+          });
+      }
+
+      Utils.setTronWeb(window.tronWeb);
+      this.fetchProducts()
+    }
+
+    static async getInitialProps(props) {
+      //Get base values
+      const address = props.query.address;
+
+      return {
+        address: address
+      };
+    }
+
+  async fetchProducts() {
+    const {
+      address
+    } = this.props;
+    this.setState({
+        products: [await Utils.fetchProduct(address)]
+    });
+    console.log("this.state.products after fetching" + this.state.products);
+  }
+
+  // renderProduct() {
+  //   const {
+  //     products
+  //   } = this.state
+  //
+  //   console.log(products);
+  //   return (
+  //     <ProductRender
+  //       photoLink={products[0].photoLink}
+  //       name={products[0].name}
+  //       avgRating={products[0].avgRating}
+  //       category={products[0].category}
+  //       reviewsCount={0}
+  //       address={products[0].address}
+  //     />
+  //     <h1>fdssdf</h1>
+  //   );
+  // }
 
   renderProduct() {
     const {
-      reviewsCount,
-      name,
-      photoLink,
-      category, //set by webpage from list of available categories
-      creator,
-      avgRating,
-      address
-    } = this.props;
+      products
+    } = this.state
 
+    console.log(products);
     return (
-      <ProductRender
-        photoLink={photoLink}
-        name={name}
-        avgRating={avgRating}
-        category={category}
-        reviewsCount={reviewsCount}
-        address={address}
-      />
+      // <ProductRender
+      //   photoLink={products[0].name}
+      //   name={products[0].name}
+      //   avgRating={products[0].avgRating}
+      //   category={products[0].category}
+      //   reviewsCount={0}
+      //   address={this.props.address}
+      // />
+      <h1>product</h1>
     );
   }
-
-
   renderReviews() {
-    const {
-      headers,
-      texts,
-      rates,
-      images,
-      creators,
-      address
-    } = this.props;
-    let items = [];
-    for (let index in headers) {
-      items.push({
-        header: headers[index],
-        text: texts[index],
-        rate: rates[index],
-        photoLink: images[index],
-        author: creators[index]
-      });
-    }
-    return (
-        <ReviewCards items={items} address={address} />
-    );
+    // const {
+    //   headers,
+    //   texts,
+    //   rates,
+    //   images,
+    //   creators,
+    //   address
+    // } = this.props;
+    // let items = [];
+    // for (let index in headers) {
+    //   items.push({
+    //     header: headers[index],
+    //     text: texts[index],
+    //     rate: rates[index],
+    //     photoLink: images[index],
+    //     author: creators[index]
+    //   });
+    // }
+    // return (
+    //     <ReviewCards items={items} address={address} />
+    // );
+    return (<h3>FHKUJ</h3>);
   }
 
   render() {

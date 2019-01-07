@@ -11,7 +11,7 @@ const solidityNode = new HttpProvider("https://api.shasta.trongrid.io");
 // // Contract events http endpoint
 const eventServer = "https://api.shasta.trongrid.io";
 // // Private key of oracle
-const privateKey = 'E62CDE753B273B76AEA4147AD6D97C2B63776933686EAB4B75D98EBA5679FE78';
+const privateKey = 'EC22B81B4ED1D89FAEFD0EAAD638D8B3400AF7ABC1E337D870463E86DB131B1C';
 //
 // // Create instance of TronWeb
 // const tronWeb = new TronWeb(

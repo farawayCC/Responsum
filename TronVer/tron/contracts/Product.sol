@@ -63,21 +63,10 @@ contract Product {
         review.voters.push(msg.sender);
     }
 
-    function getSummary() public view returns (
-      string, string, string, address
-      ) {
-        return (
-          name,
-          photoLink,
-          category, //set by webpage from list of available categories
-          creator
-        );
-    }
-
     function getReviewsCount() public view returns (uint) {
         return reviews.length;
     }
-    
+
     function markAsDeleted() public restrictedCreator {
       isDeleted = true;
     }
