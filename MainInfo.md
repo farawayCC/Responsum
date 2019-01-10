@@ -13,13 +13,13 @@ review and
  The contract is holding all Products and reviews for them. All adjestments can be done by
 manager, including adding new managers
 and deleting the current ones.
+
  # Base princips
  * Невмешательсво админов
 
  * главенствует блокчейн, а мы только показуем информацию, сортируя данные и
 выставляя повышенные рейтинги
 
- -...
 ## Managers
 * Могут модерировать, в том числе удалять первоначального менеджера (Если доступом
 завлядеют)
@@ -41,10 +41,10 @@ and deleting the current ones.
 при этом должна быть соблюдена количественность.
 Logic => {
  blockPeriod = creationDate + minTimeWithdraw
- if ( (lastOut > blockPeriod && reviews.length > 10) {
+``` if ( (lastOut > blockPeriod && reviews.length > 10) {
  /Вывод топовым отзывам(45+22+8+5+3+2+2+2+1 / 10% на развитие платформы)/
  }
-}
+}```
  * Никто не может выводить деньги заранее, а никакой рейтинг не может идти против
 обезумевшей толпы (на самом деле это ситуация,
 когда попался недобросовестный менеджер, пытающийся накрутить себе рейтинг)
