@@ -12,6 +12,7 @@ import { Link } from '../../routes';
 
 class ProductShow extends Component {
   static async getInitialProps(props) {
+    console.log("Welcome to pages/show")
     const product = Product(props.query.address); //that props, if i get it right, we get from routes.js wildcard
 
     //Get base values

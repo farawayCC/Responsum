@@ -101,10 +101,6 @@ class ProductIndex extends Component {
     this.fetchProducts();
   }
 
-  componentWillUnmount() {
-
-  }
-
   async fetchProducts() {
       this.setState({
           products: await Utils.fetchProducts()

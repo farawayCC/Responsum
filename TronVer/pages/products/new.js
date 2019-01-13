@@ -5,6 +5,7 @@ import factory from '../../tron/factory';
 import tronWeb from '../../tron/tronweb';
 import { Router } from '../../routes';
 import Utils from '../../tron/utils/index';
+import deploy_product from '../../scripts/deploy_product';
 
 
 class CampaignNew extends Component {
@@ -18,82 +19,82 @@ class CampaignNew extends Component {
 
 
   async componentDidMount() {
-      await new Promise(resolve => {
-          const tronWebState = {
-              installed: !!window.tronWeb,
-              loggedIn: window.tronWeb && window.tronWeb.ready
-          };
+    await new Promise(resolve => {
+        const tronWebState = {
+            installed: !!window.tronWeb,
+            loggedIn: window.tronWeb && window.tronWeb.ready
+        };
 
-          if(tronWebState.installed) {
-              this.setState({
-                  tronWeb:
-                  tronWebState
-              });
+        if(tronWebState.installed) {
+            this.setState({
+                tronWeb:
+                tronWebState
+            });
 
-              return resolve();
-          }
+            return resolve();
+        }
 
-          let tries = 0;
+        let tries = 0;
 
-          const timer = setInterval(() => {
-              if(tries >= 10) {
-                  const TRONGRID_API = "https://api.shasta.trongrid.io";
+        const timer = setInterval(() => {
+            if(tries >= 10) {
+                const TRONGRID_API = "https://api.shasta.trongrid.io";
 
-                  window.tronWeb = new TronWeb(
-                      TRONGRID_API,
-                      TRONGRID_API,
-                      TRONGRID_API
-                  );
+                window.tronWeb = new TronWeb(
+                    TRONGRID_API,
+                    TRONGRID_API,
+                    TRONGRID_API
+                );
 
-                  this.setState({
-                      tronWeb: {
-                          installed: false,
-                          loggedIn: false
-                      }
-                  });
+                this.setState({
+                    tronWeb: {
+                        installed: false,
+                        loggedIn: false
+                    }
+                });
 
-                  clearInterval(timer);
-                  return resolve();
-              }
+                clearInterval(timer);
+                return resolve();
+            }
 
-              tronWebState.installed = !!window.tronWeb;
-              tronWebState.loggedIn = window.tronWeb && window.tronWeb.ready;
+            tronWebState.installed = !!window.tronWeb;
+            tronWebState.loggedIn = window.tronWeb && window.tronWeb.ready;
 
-              if(!tronWebState.installed)
-                  return tries++;
+            if(!tronWebState.installed)
+                return tries++;
 
-              this.setState({
-                  tronWeb: tronWebState
-              });
+            this.setState({
+                tronWeb: tronWebState
+            });
 
-              resolve();
-          }, 100);
-      });
+            resolve();
+        }, 100);
+    });
 
-      if(!this.state.tronWeb.loggedIn) {
-          // Set default address (foundation address) used for contract calls
-          // Directly overwrites the address object as TronLink disabled the
-          // function call
-          window.tronWeb.defaultAddress = {
-              hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
-              base58: FOUNDATION_ADDRESS
-          };
+    if(!this.state.tronWeb.loggedIn) {
+        // Set default address (foundation address) used for contract calls
+        // Directly overwrites the address object as TronLink disabled the
+        // function call
+        window.tronWeb.defaultAddress = {
+            hex: window.tronWeb.address.toHex(FOUNDATION_ADDRESS),
+            base58: FOUNDATION_ADDRESS
+        };
 
-          window.tronWeb.on('addressChanged', () => {
-              if(this.state.tronWeb.loggedIn)
-                  return;
+        window.tronWeb.on('addressChanged', () => {
+            if(this.state.tronWeb.loggedIn)
+                return;
 
-              this.setState({
-                  tronWeb: {
-                      installed: true,
-                      loggedIn: true
-                  }
-              });
-          });
-      }
-
-      Utils.setTronWeb(window.tronWeb);
+            this.setState({
+                tronWeb: {
+                    installed: true,
+                    loggedIn: true
+                }
+            });
+        });
     }
+
+    Utils.setTronWeb(window.tronWeb);
+  }
 
   onSubmit = async event => {
     event.preventDefault();
@@ -101,26 +102,43 @@ class CampaignNew extends Component {
     this.setState({ loading: true, errorMessage: '' });
 
     try {
-      await Utils.contract.createProduct(
-          this.state.name,
-          this.state.category,
-          this.state.photoLink)
-          .send({
-            feeLimit: 1000000000,
-            shouldPollResponse: true,
-            callValue: 0,
-            origin_energy_limit: 10000000
-          }).catch(err => {
-            console.log(err);
-          });
+      //Create new Product smart-contract
+      console.log("Trying to create a contract");
+      let contract_instance = await tronWeb.contract()
+        .new({
+          abi: Utils.productAbi,
+          bytecode:Utils.productBytecode,
+          feeLimit: 1000000000,
+          callValue : 0,
+          userFeePercentage : 1,
+          parameters:[this.state.name, this.state.category, this.state.photoLink, window.tronWeb.defaultAddress.base58]
+        })
+      console.log("Contract created: "+contract_instance.address);
+      // console.log(window.tronWeb.defaultAddress.base58);
+      //console.log("contract_instance.address"+contract_instance.address);
 
-          const deployedProducts = await Utils.contract.getDeployedProducts().call();
-          const lastProduct = deployedProducts[deployedProducts.length-1];
-          console.log("lastProduct address: "+lastProduct)
-          Router.pushRoute(`/products/${lastProduct}`);
+      // Utils.contract.registerNewProduct(contract_instance.address)
+      //   .send({
+      //     feeLimit: 1000000000,
+      //     shouldPollResponse: true,
+      //     callValue: 0,
+      //     origin_energy_limit: 10000000
+      //   }).catch(err => {
+      //     console.log(err);
+      //   });
+
+      //
+
+      // const deployedProducts = await Utils.contract.getDeployedProducts().call();
+      // const lastProduct = deployedProducts[deployedProducts.length-1];
+      // console.log("lastProduct address: "+lastProduct)
+      // Router.pushRoute(`/products/${lastProduct}`);
+      console.log("end");
     } catch (err) {
       this.setState({ errorMessage: err.message });
     }
+
+    console.log("Switching off method .onSubmit.");
 
     this.setState({ loading: false });
   };
