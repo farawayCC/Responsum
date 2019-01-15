@@ -14,4 +14,8 @@ contract ProductFactory {
     function getDeployedProducts() public view returns (address[]) {
         return deployedProducts;
     }
+
+    function registerNewProduct(Product prod) public {
+        deployedProducts.push(prod);
+    }
 }
