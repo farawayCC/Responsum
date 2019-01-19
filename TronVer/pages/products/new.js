@@ -5,7 +5,7 @@ import factory from '../../tron/factory';
 import tronWeb from '../../tron/tronweb';
 import { Router } from '../../routes';
 import Utils from '../../tron/utils/index';
-
+import deploy from '../../tron/deploy'
 
 class CampaignNew extends Component {
   state = {
@@ -101,10 +101,10 @@ class CampaignNew extends Component {
     this.setState({ loading: true, errorMessage: '' });
 
     try {
-      await Utils.contract.createProduct(
+      /*await Utils.contract.createProduct(
           this.state.name,
           this.state.category,
-          this.state.photoLink)
+          this.state.photoLink)*
           .send({
             feeLimit: 1000000000,
             shouldPollResponse: true,
@@ -112,7 +112,15 @@ class CampaignNew extends Component {
             origin_energy_limit: 10000000
           }).catch(err => {
             console.log(err);
-          });
+          });*/
+
+          const deployedAddress = await deploy();
+
+          console.log(deployedAddress);
+
+          // Utils.contract.registerNewProduct(
+          //
+          // )
 
           const deployedProducts = await Utils.contract.getDeployedProducts().call();
           const lastProduct = deployedProducts[deployedProducts.length-1];

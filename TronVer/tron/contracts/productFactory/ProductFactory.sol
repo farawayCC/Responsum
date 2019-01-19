@@ -6,9 +6,9 @@ pragma solidity ^0.4.17;
 contract ProductFactory {
     address[] public deployedProducts;
 
-    function createProduct(string productName, string productCategory, string productPhotoLink) public {
-        address newProduct = new Product(productName, productCategory, productPhotoLink, msg.sender);
-        deployedProducts.push(newProduct);
+    function createProduct(string productName, string productCategory, string productPhotoLink) public view returns (Product) {
+        return new Product(productName, productCategory, productPhotoLink, msg.sender);
+        //deployedProducts.push(newProduct);
     }
 
     function getDeployedProducts() public view returns (address[]) {

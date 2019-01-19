@@ -1,7 +1,7 @@
 const solc = require('solc');
 const fs = require('fs-extra');
 const TronWeb = require('TronWeb');
-const config = require('./config.json');
+const config = require('./config/tron.json');
 
 const CONTRACT_FOLDER = '../contracts/';
 
@@ -17,7 +17,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function deploy() {
+async function deploy(props) {
   const input = {};
 
   const files = fs.readdirSync(CONTRACT_FOLDER);
@@ -35,9 +35,15 @@ async function deploy() {
       // code and ABI that are needed by web3
       console.log(`deploying ${contractName}`);
 
-      const unsigned = await tronWeb.transactionBuilder.createSmartContract({
+      const unsigned = await tronWeb.contract().new({
         abi: compiled.contracts[contractName].interface,
         bytecode: compiled.contracts[contractName].bytecode,
+        parameters: [
+          props.productName,
+          props.productCategory,
+          props.productPhotoLink,
+          props.productCreator,
+        ]
       });
       const signed = await tronWeb.trx.sign(unsigned);
       const broadcastResult = await tronWeb.trx.sendRawTransaction(signed);
@@ -55,6 +61,8 @@ async function deploy() {
                 address: signed.contract_address,
                 abi: JSON.parse(compiled.contracts[contractName].interface)
               }
+
+              return signed.contract_address
             } else {
               console.log(`FAILED deploying ${contractName}. Cost: ${transactionInfo.receipt.energy_fee / 1000000} TRX.`);
               console.log(`transaction info:`);
@@ -68,15 +76,17 @@ async function deploy() {
         console.log(`FAILED to broadcast ${contractName} deploy transaction`);
         console.log((broadcastResult));
         process.exit();
+        return {};
       }
     }
 
-    fs.writeFileSync('../src/config/contracts.json', JSON.stringify(output, null, 4));
+    fs.writeFileSync('./config/contracts.json', JSON.stringify(output, null, 4));
   } else {
     console.log(`FAILED to compile solidity...`);
     compiled.errors.map((e) => {
       console.log(e);
     });
+    return {};
   }
 }
 
