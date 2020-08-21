@@ -5,7 +5,7 @@
 
 # Current state
 
-Nowadays project is under slow development. Core functionality is already presented using Ethereum blockchain (link in repository's head), but we are migrating to Tron network because during development we found out that eth blockchain is too slow for that kind of project and require a lot of money to proceed transactions (create reviews). It will give our product more usability because with it we can provide a solution to review products without a need of going to cryptocurrency exchange. You can learn more about this great blockchain at https://developers.tron.network/docs/getting-started 
+Nowadays project is mothballed until better times. Core functionality is already presented using Ethereum blockchain (link in repository's head), but we are migrating to Tron network because during development we found out that eth blockchain is too slow for that kind of project and require a lot of money to proceed transactions (create reviews). It will give our product more usability because with it we can provide a solution to review products without a need of going to cryptocurrency exchange. You can learn more about this great blockchain at https://developers.tron.network/docs/getting-started 
 
 # How to try
 ### Note
